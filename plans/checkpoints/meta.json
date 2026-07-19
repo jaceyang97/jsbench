@@ -35,16 +35,16 @@
       "k": 3,
       "runs": 405,
       "est_cost_usd": 221.4,
-      "unreviewed_graders": 2
+      "unreviewed_graders": 0
     },
     {
       "batch": "cp4",
-      "puzzles": 57,
+      "puzzles": 52,
       "k": 3,
-      "runs": 513,
-      "est_cost_usd": 280.44,
-      "unreviewed_graders": 52
+      "runs": 468,
+      "est_cost_usd": 255.84,
+      "unreviewed_graders": 0
     }
   ],
-  "est_total_usd": 688.8
+  "est_total_usd": 664.2
 }

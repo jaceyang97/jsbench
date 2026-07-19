@@ -59,3 +59,17 @@
   17418240)经人工核对为真实答错(非判分漏判)。成本均价低于预测带下限(haiku
   $0.15/opus $0.27/sonnet $0.56 vs 预测 0.30/0.55/0.79)—— 单次采样比会话重试便宜,
   全量估算 ~$699 偏保守,实际可能更低。基建可信,放行 cp1。
+- 2026-07-19 深夜 全库 grader 核对完毕(148/148,逐题对照官方 solution):
+  ①cp1 发射前 6 道核对全过,隔离 gate(放行 8/8、封锁 12/12、直连拦截、pip 通)、
+  记忆探针(仅 fable 2 命中,参赛三模型零命中)、图片冒烟(参赛三模型全 ok)全绿,
+  cp1(99 runs)已发射;②核对中发现并修正 **19 处答案抽取错误**(如 question-mark
+  存了解题人数 20 而非答案 50;games-night 存 'a' 而非 Battleship;robot 系列多题存了
+  bold 片段而非数值答案),全部按官方 solution 改正;③新增 9 道开放竞赛题
+  exclude_recommended(chain-reaction、minesweeping、scraggle、altered-states-2、
+  hall-of-mirrors、polymath、swing-time、middlylinks、almost-magic,全部为
+  best-known/无唯一解/欠定题,依既有先例),题集 144→**134**,估算 ~$664;
+  ④新增 3 个证书验证器:tangled(Conway 有理缠结模拟,约定用官方 114 步答案钉死)、
+  knight_moves_6(题图 A/B/C 网格转录,经题例与独立搜索双重验证)、what_a_trit
+  (trit 精确换算),防裸报数值作弊;normalize 的 multi 类型增加 alias 支持
+  (轮转等价、"and" 措辞),22/22 单测过;⑤cp0/cp1/cp2 计划在历次重建中逐字节
+  不变(已验证),校准题 sample_1 复用逻辑未受影响。
