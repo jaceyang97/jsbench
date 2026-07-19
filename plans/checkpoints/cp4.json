@@ -75,17 +75,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "opus",
     "k": 3
   },
@@ -180,17 +180,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "opus",
     "k": 3
   },
@@ -285,17 +285,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "opus",
     "k": 3
   },
@@ -375,17 +375,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "opus",
     "k": 3
   },
@@ -435,17 +435,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "opus",
     "k": 3
   },
@@ -495,17 +495,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "opus",
     "k": 3
   },
@@ -555,17 +555,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-06-polymath",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-06-polymath",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-06-polymath",
     "tier": "opus",
     "k": 3
   },
@@ -615,17 +615,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "opus",
     "k": 3
   },
@@ -675,17 +675,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "opus",
     "k": 3
   },
@@ -735,17 +735,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "opus",
     "k": 3
   },
@@ -776,21 +776,6 @@
   },
   {
     "puzzle_id": "2022-11-pent-up-frustration-2",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
     "tier": "opus",
     "k": 3
   },

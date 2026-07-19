@@ -132,16 +132,23 @@ def normalize_and_compare(submitted, expected, grader: dict) -> tuple[bool, str]
                 return True, f"eq-side-{why}"
 
     if answer_type == "multi":
-        # multi-part answers: parts separated by comma/semicolon, order matters
+        # multi-part answers: parts separated by comma/semicolon, order matters;
+        # aliases hold alternative full lists (e.g. rotations of a tuple answer)
         sp = [p for p in re.split(r"[;,]", str(submitted)) if p.strip()]
-        ep = [p for p in re.split(r"[;,]", str(expected)) if p.strip()]
-        if len(sp) != len(ep):
-            return False, f"multi-count({len(sp)}!={len(ep)})"
-        for spart, epart in zip(sp, ep):
-            ok, _ = _compare_scalar(clean(spart), clean(epart), tol, "expression", grader)
-            if not ok:
-                return False, f"multi-part-mismatch({spart.strip()!r})"
-        return True, "multi"
+        last_reason = "multi"
+        for i, cand in enumerate([expected] + list(grader.get("aliases", []))):
+            ep = [p for p in re.split(r"[;,]", str(cand)) if p.strip()]
+            if len(sp) != len(ep):
+                last_reason = f"multi-count({len(sp)}!={len(ep)})"
+                continue
+            for spart, epart in zip(sp, ep):
+                ok, _ = _compare_scalar(clean(spart), clean(epart), tol, "expression", grader)
+                if not ok:
+                    last_reason = f"multi-part-mismatch({spart.strip()!r})"
+                    break
+            else:
+                return True, "multi" if i == 0 else "multi-alias"
+        return False, last_reason
 
     # aliases may hold exact symbolic forms; accept any matching alias wholesale
     for alias in grader.get("aliases", []):
