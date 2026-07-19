@@ -1,5 +1,50 @@
 [
   {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "opus",
+    "k": 3
+  },
+  {
     "puzzle_id": "2023-01-lesses-more",
     "tier": "haiku",
     "k": 3
@@ -326,51 +371,6 @@
   },
   {
     "puzzle_id": "2023-06-hooks-9",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2016-06-get-out-the-vote",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2016-06-get-out-the-vote",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2016-06-get-out-the-vote",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2014-05-tile-and-trouble",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2014-05-tile-and-trouble",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2014-05-tile-and-trouble",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2017-06-well-well-well",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2017-06-well-well-well",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2017-06-well-well-well",
     "tier": "opus",
     "k": 3
   }

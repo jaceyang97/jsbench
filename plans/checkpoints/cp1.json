@@ -1,5 +1,50 @@
 [
   {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "opus",
+    "k": 3
+  },
+  {
     "puzzle_id": "2025-12-robot-javelin",
     "tier": "haiku",
     "k": 3
@@ -131,51 +176,6 @@
   },
   {
     "puzzle_id": "2018-03-it-s-symmetric",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-02-subtiles-2",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-02-subtiles-2",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-02-subtiles-2",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-04-can-u-dig-it",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-04-can-u-dig-it",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-04-can-u-dig-it",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-05-arch-madness",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-05-arch-madness",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2026-05-arch-madness",
     "tier": "opus",
     "k": 3
   }

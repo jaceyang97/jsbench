@@ -74,38 +74,51 @@ def usable_puzzles() -> list[dict]:
 
 
 def build_batches(puzzles: list[dict]) -> list[list[dict]]:
-    """Deal puzzles into batches, stratified by (era, diff), calibration first."""
+    """Deal puzzles into batches.
+
+    cp0 (canary, k=1): the first 3 calibration puzzles — an infra shakeout.
+      These runs ARE valid independent sample_1's and are REUSED by the scored
+      set (the runner is idempotent on (puzzle, model, sample_idx)), so nothing
+      is wasted.
+    cp1..cp4 (scored, k=3): the FULL puzzle set — every usable puzzle, including
+      the 3 calibration ones, stratified by (era, diff). For a calibration
+      puzzle the runner skips sample_1 (already done in cp0) and runs samples
+      2,3; every other puzzle runs samples 1,2,3.
+    """
     n_batches = len(BATCH_SIZES)
     batches: list[list[dict]] = [[] for _ in range(n_batches)]
-    caps = [s if s is not None else 10**9 for s in BATCH_SIZES]
+    caps = [s if s is not None else 10**9 for s in BATCH_SIZES[1:]]  # cp1..cp4
 
     calib = [p for p in puzzles if p["puzzle_id"] in CALIBRATION]
+    batches[0] = calib[:BATCH_SIZES[0]]          # cp0 canary
+
+    # cp1..cp4: ALL puzzles, calibration first (so their sample_2/3 run early),
+    # then a stratified round-robin over the rest.
+    scored_batches = [[] for _ in range(n_batches - 1)]
+    for p in calib:                              # every calibration puzzle -> cp1
+        scored_batches[0].append(p)
+
     rest = [p for p in puzzles if p["puzzle_id"] not in CALIBRATION]
-
-    # canary: 3 calibration puzzles (image + math + old covered by the set)
-    batches[0] = calib[:BATCH_SIZES[0]]
-    # cp1 starts with remaining calibration puzzles
-    batches[1] = calib[BATCH_SIZES[0]:]
-
-    # stratified round-robin deal of the rest, filling cp1..cp4 up to caps
     cells: dict[tuple, list[dict]] = defaultdict(list)
     for p in sorted(rest, key=lambda e: e["puzzle_id"]):
         cells[(p["_era"], p["_diff"])].append(p)
-    target = 1
-    # interleave cells so each batch gets a mix
     queues = [q for _, q in sorted(cells.items())]
+    target = 0
     while any(queues):
+        progressed = False
         for q in queues:
             if not q:
                 continue
-            while target < n_batches and len(batches[target]) >= caps[target]:
+            while target < len(scored_batches) and len(scored_batches[target]) >= caps[target]:
                 target += 1
-            if target >= n_batches:
+            if target >= len(scored_batches):
                 break
-            batches[target].append(q.pop(0))
-        else:
-            continue
-        break
+            scored_batches[target].append(q.pop(0))
+            progressed = True
+        if not progressed or target >= len(scored_batches):
+            break
+    for i, sb in enumerate(scored_batches):
+        batches[i + 1] = sb
     return batches
 
 

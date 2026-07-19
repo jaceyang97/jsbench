@@ -1,5 +1,50 @@
 [
   {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-01-alter-nate",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-01-alter-nate",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-01-alter-nate",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "opus",
+    "k": 3
+  },
+  {
     "puzzle_id": "2025-06-some-ones-somewhere",
     "tier": "haiku",
     "k": 3

@@ -1,5 +1,50 @@
 [
   {
+    "puzzle_id": "2016-06-get-out-the-vote",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-06-get-out-the-vote",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-06-get-out-the-vote",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-06-well-well-well",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-06-well-well-well",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-06-well-well-well",
+    "tier": "opus",
+    "k": 3
+  },
+  {
     "puzzle_id": "2018-08-hooks-4",
     "tier": "haiku",
     "k": 3
@@ -626,51 +671,6 @@
   },
   {
     "puzzle_id": "2020-05-expelled",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-10-candy-collectors",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-10-candy-collectors",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-10-candy-collectors",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-01-alter-nate",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-01-alter-nate",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2020-01-alter-nate",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
     "tier": "opus",
     "k": 3
   }
