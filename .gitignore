@@ -14,3 +14,6 @@ runs/
 
 # local-only backup of pre-publication git history
 .git_local_backup/
+
+# handoff docs are local-only working notes
+HANDOFF*.md
