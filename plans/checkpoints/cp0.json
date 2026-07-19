@@ -1,0 +1,47 @@
+[
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "haiku",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "sonnet",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "opus",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "haiku",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "sonnet",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "opus",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "haiku",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "sonnet",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "opus",
+    "k": 1
+  }
+]

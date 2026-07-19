@@ -1,0 +1,742 @@
+[
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-09-superflip",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-09-superflip",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-09-superflip",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-09-superflip",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-03-birthday-bash",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-03-birthday-bash",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-03-birthday-bash",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-03-birthday-bash",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-04-knight-moves-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-04-knight-moves-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-04-knight-moves-2",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-04-knight-moves-2",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-04-remote-sudoku",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-04-remote-sudoku",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-04-remote-sudoku",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-04-remote-sudoku",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-05-disassembled-rainbow-bagel",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-05-disassembled-rainbow-bagel",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-05-disassembled-rainbow-bagel",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-05-disassembled-rainbow-bagel",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-11-hooks-6",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-11-hooks-6",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-11-hooks-6",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-11-hooks-6",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-01-some-f-squares",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-01-some-f-squares",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-01-some-f-squares",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-01-some-f-squares",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-03-hooks-10",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-03-hooks-10",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-03-hooks-10",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-03-hooks-10",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-04-robot-capture-the-flag",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-04-robot-capture-the-flag",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-04-robot-capture-the-flag",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-04-robot-capture-the-flag",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-05-number-cross-5",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-05-number-cross-5",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-05-number-cross-5",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-05-number-cross-5",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "fable",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "fable",
+    "k": 3
+  }
+]

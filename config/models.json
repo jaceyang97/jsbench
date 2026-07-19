@@ -1,0 +1,100 @@
+{
+  "_verified": {
+    "date": "2026-07-19",
+    "sources": [
+      "https://platform.claude.com/docs/en/about-claude/models/overview.md",
+      "claude-api skill (cached 2026-06-24) cross-checked against live docs"
+    ],
+    "notes": [
+      "All model IDs are pinned snapshots (dateless IDs from 4.6-generation onward are still pinned, not evergreen).",
+      "Sonnet 5 introductory pricing $2/$10 per MTok applies through 2026-08-31; standard $3/$15 after.",
+      "Cache read ~= 10% of input price; cache write 1.25x (5m TTL).",
+      "reliable_cutoff = date through which knowledge is most extensive/reliable; training_cutoff = broader training data range. Time-partition analysis uses reliable_cutoff (conservative: post-cutoff only if puzzle month > training_cutoff for ALL models).",
+      "fable-5: thinking always on (cannot disable, 400); safety classifier may silently hand off to opus-4-8 -> detect via per-model usage in result (model_handoff_detected).",
+      "haiku-4-5: only model still using extended thinking w/ budget_tokens; omitting thinking param = thinking off (useful for probe)."
+    ]
+  },
+  "models": [
+    {
+      "tier": "haiku",
+      "model_id": "claude-haiku-4-5-20251001",
+      "display_name": "Claude Haiku 4.5",
+      "reliable_cutoff": "2025-02",
+      "training_cutoff": "2025-07",
+      "context_window": 200000,
+      "max_output": 64000,
+      "pricing_per_mtok": {
+        "input": 1.0,
+        "output": 5.0,
+        "cache_read": 0.1,
+        "cache_write_5m": 1.25
+      },
+      "max_budget_usd": 0.75,
+      "max_turns": 30,
+      "max_attempts": 1,
+      "samples_k": 3
+    },
+    {
+      "tier": "sonnet",
+      "model_id": "claude-sonnet-5",
+      "display_name": "Claude Sonnet 5",
+      "reliable_cutoff": "2026-01",
+      "training_cutoff": "2026-01",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "pricing_per_mtok": {
+        "input": 3.0,
+        "output": 15.0,
+        "cache_read": 0.2,
+        "cache_write_5m": 1.25,
+        "intro_until": "2026-08-31",
+        "intro_input": 2.0,
+        "intro_output": 10.0,
+        "intro_cache_read": 0.2
+      },
+      "max_budget_usd": 1.5,
+      "max_turns": 40,
+      "max_attempts": 1,
+      "samples_k": 3
+    },
+    {
+      "tier": "opus",
+      "model_id": "claude-opus-4-8",
+      "display_name": "Claude Opus 4.8",
+      "reliable_cutoff": "2026-01",
+      "training_cutoff": "2026-01",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "pricing_per_mtok": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_read": 0.5,
+        "cache_write_5m": 1.25
+      },
+      "max_budget_usd": 3.0,
+      "max_turns": 40,
+      "max_attempts": 1,
+      "samples_k": 3
+    },
+    {
+      "tier": "fable",
+      "model_id": "claude-fable-5",
+      "display_name": "Claude Fable 5",
+      "reliable_cutoff": "2026-01",
+      "training_cutoff": "2026-01",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "pricing_per_mtok": {
+        "input": 10.0,
+        "output": 50.0,
+        "cache_read": 1.0,
+        "cache_write_5m": 1.25
+      },
+      "max_budget_usd": 5.0,
+      "max_turns": 40,
+      "handoff_fallback_model": "claude-opus-4-8",
+      "max_attempts": 1,
+      "samples_k": 3
+    }
+  ]
+}

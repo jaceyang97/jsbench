@@ -1,0 +1,6 @@
+# Shell scripts and proxy configs run inside the Linux container — force LF
+# so a Windows checkout doesn't inject CRLF and break bash / tinyproxy.
+*.sh text eol=lf
+docker/proxy/filter text eol=lf
+docker/proxy/tinyproxy.conf text eol=lf
+Dockerfile text eol=lf

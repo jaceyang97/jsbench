@@ -1,0 +1,50 @@
+{
+  "tiers": [
+    "haiku",
+    "sonnet",
+    "opus"
+  ],
+  "batches": [
+    {
+      "batch": "cp0",
+      "puzzles": 3,
+      "k": 1,
+      "runs": 9,
+      "est_cost_usd": 4.92,
+      "unreviewed_graders": 0
+    },
+    {
+      "batch": "cp1",
+      "puzzles": 12,
+      "k": 3,
+      "runs": 108,
+      "est_cost_usd": 59.04,
+      "unreviewed_graders": 6
+    },
+    {
+      "batch": "cp2",
+      "puzzles": 25,
+      "k": 3,
+      "runs": 225,
+      "est_cost_usd": 123.0,
+      "unreviewed_graders": 17
+    },
+    {
+      "batch": "cp3",
+      "puzzles": 45,
+      "k": 3,
+      "runs": 405,
+      "est_cost_usd": 221.4,
+      "unreviewed_graders": 40
+    },
+    {
+      "batch": "cp4",
+      "puzzles": 59,
+      "k": 3,
+      "runs": 531,
+      "est_cost_usd": 290.28,
+      "unreviewed_graders": 54
+    }
+  ],
+  "est_total_usd": 698.64
+}

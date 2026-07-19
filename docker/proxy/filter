@@ -1,0 +1,58 @@
+# tinyproxy DENY list (FilterExtended regex, FilterDefaultDeny No = default allow).
+# Empirical blocklist of places a Jane Street puzzle solution could exist.
+# Matched against the CONNECT host. Anything not listed is ALLOWED (agents may
+# consult math/programming reference material). Every request is logged; the
+# post-hoc transcript audit is the backstop for anything that slips through.
+#
+# --- the source itself ---
+(^|\.)janestreet\.com$
+#
+# --- code hosts (solver repos: gowen100, miguelbper, iamzr, ...) ---
+(^|\.)github\.com$
+(^|\.)githubusercontent\.com$
+(^|\.)github\.io$
+(^|\.)gist\.github\.com$
+(^|\.)gitlab\.com$
+(^|\.)bitbucket\.org$
+(^|\.)codeberg\.org$
+(^|\.)sourceforge\.net$
+(^|\.)gitea\.io$
+#
+# --- search engines (the discovery layer: block the ability to FIND a
+#     solution page even on an otherwise-allowed host) ---
+(^|\.)google\.[a-z.]+$
+(^|\.)bing\.com$
+(^|\.)duckduckgo\.com$
+(^|\.)yandex\.[a-z.]+$
+(^|\.)baidu\.com$
+(^|\.)search\.brave\.com$
+(^|\.)ecosia\.org$
+(^|\.)startpage\.com$
+(^|\.)qwant\.com$
+(^|\.)search\.marginalia\.nu$
+(^|\.)searx\.
+(^|\.)kagi\.com$
+(^|\.)you\.com$
+(^|\.)perplexity\.ai$
+(^|\.)phind\.com$
+#
+# --- video / social / blog hubs where writeups & walkthroughs live ---
+(^|\.)youtube\.com$
+(^|\.)youtu\.be$
+(^|\.)reddit\.com$
+(^|\.)redd\.it$
+(^|\.)twitter\.com$
+(^|\.)x\.com$
+(^|\.)medium\.com$
+(^|\.)substack\.com$
+(^|\.)quora\.com$
+#
+# --- puzzle / Q&A sites that host Jane Street solutions specifically ---
+(^|\.)puzzling\.stackexchange\.com$
+#
+# --- other LLM/assistant endpoints (avoid outsourcing the solve) ---
+(^|\.)openai\.com$
+(^|\.)googleapis\.com$
+(^|\.)generativelanguage\.googleapis\.com$
+(^|\.)deepseek\.com$
+(^|\.)mistral\.ai$

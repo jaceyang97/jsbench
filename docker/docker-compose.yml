@@ -1,0 +1,35 @@
+# jsbench isolated runtime.
+#   docker compose -f docker/docker-compose.yml up -d proxy
+#   docker compose -f docker/docker-compose.yml run --rm agent \
+#       bash docker/verify_isolation.sh          # gate check
+#   docker compose -f docker/docker-compose.yml run --rm agent \
+#       python3 -m orchestrate.runner --phase0
+#
+# `bench_internal` has no external route; the agent reaches the world only
+# through the proxy sidecar, which enforces the api.anthropic.com allowlist.
+services:
+  proxy:
+    build: ./proxy
+    networks: [bench_internal, egress]
+    restart: unless-stopped
+
+  agent:
+    build: .
+    # Claude Code refuses bypassPermissions as root — run as the node user
+    user: node
+    environment:
+      - HOME=/home/node
+      - HTTPS_PROXY=http://proxy:8888
+      - HTTP_PROXY=http://proxy:8888
+      - NO_PROXY=localhost,127.0.0.1
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ..:/bench
+    working_dir: /bench
+    networks: [bench_internal]
+    depends_on: [proxy]
+
+networks:
+  bench_internal:
+    internal: true      # no direct egress for agents
+  egress: {}

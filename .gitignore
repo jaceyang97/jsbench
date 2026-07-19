@@ -1,0 +1,16 @@
+# credentials — never commit
+.env
+
+# local environments
+.venv/
+__pycache__/
+*.pyc
+
+# scraped Jane Street content + graders + run artifacts: local only.
+# (no redistribution of puzzle content; keeps the benchmark set out of
+# future training corpora; reproducible via pipeline.scrape)
+data/
+runs/
+
+# local-only backup of pre-publication git history
+.git_local_backup/
