@@ -27,7 +27,7 @@
       "k": 3,
       "runs": 225,
       "est_cost_usd": 123.0,
-      "unreviewed_graders": 1
+      "unreviewed_graders": 0
     },
     {
       "batch": "cp3",
@@ -35,16 +35,16 @@
       "k": 3,
       "runs": 405,
       "est_cost_usd": 221.4,
-      "unreviewed_graders": 41
+      "unreviewed_graders": 2
     },
     {
       "batch": "cp4",
-      "puzzles": 61,
+      "puzzles": 57,
       "k": 3,
-      "runs": 549,
-      "est_cost_usd": 300.12,
-      "unreviewed_graders": 54
+      "runs": 513,
+      "est_cost_usd": 280.44,
+      "unreviewed_graders": 52
     }
   ],
-  "est_total_usd": 708.48
+  "est_total_usd": 688.8
 }

@@ -150,17 +150,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-07-chain-reaction",
+    "puzzle_id": "2014-08-number-cross",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-07-chain-reaction",
+    "puzzle_id": "2014-08-number-cross",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-07-chain-reaction",
+    "puzzle_id": "2014-08-number-cross",
     "tier": "opus",
     "k": 3
   },
@@ -225,17 +225,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2024-06-altered-states-2",
+    "puzzle_id": "2024-10-knight-moves-6",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2024-06-altered-states-2",
+    "puzzle_id": "2024-10-knight-moves-6",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2024-06-altered-states-2",
+    "puzzle_id": "2024-10-knight-moves-6",
     "tier": "opus",
     "k": 3
   },
@@ -285,17 +285,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-08-number-cross",
+    "puzzle_id": "2014-09-superflip",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-08-number-cross",
+    "puzzle_id": "2014-09-superflip",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-08-number-cross",
+    "puzzle_id": "2014-09-superflip",
     "tier": "opus",
     "k": 3
   },
@@ -330,32 +330,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2019-07-scraggle",
+    "puzzle_id": "2019-10-tri-tri-again-again",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2019-07-scraggle",
+    "puzzle_id": "2019-10-tri-tri-again-again",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2019-07-scraggle",
+    "puzzle_id": "2019-10-tri-tri-again-again",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2024-10-knight-moves-6",
+    "puzzle_id": "2024-11-beside-the-point",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2024-10-knight-moves-6",
+    "puzzle_id": "2024-11-beside-the-point",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2024-10-knight-moves-6",
+    "puzzle_id": "2024-11-beside-the-point",
     "tier": "opus",
     "k": 3
   },
@@ -405,17 +405,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-09-superflip",
+    "puzzle_id": "2014-11-wrong-division",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-09-superflip",
+    "puzzle_id": "2014-11-wrong-division",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-09-superflip",
+    "puzzle_id": "2014-11-wrong-division",
     "tier": "opus",
     "k": 3
   },
@@ -450,32 +450,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2019-10-tri-tri-again-again",
+    "puzzle_id": "2019-11-hooks-6",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2019-10-tri-tri-again-again",
+    "puzzle_id": "2019-11-hooks-6",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2019-10-tri-tri-again-again",
+    "puzzle_id": "2019-11-hooks-6",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2024-11-beside-the-point",
+    "puzzle_id": "2024-12-games-night",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2024-11-beside-the-point",
+    "puzzle_id": "2024-12-games-night",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2024-11-beside-the-point",
+    "puzzle_id": "2024-12-games-night",
     "tier": "opus",
     "k": 3
   },
@@ -525,17 +525,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-10-minesweeping",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-10-minesweeping",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-10-minesweeping",
+    "puzzle_id": "2014-12-deck-the-cards",
     "tier": "opus",
     "k": 3
   },
@@ -570,32 +570,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2019-11-hooks-6",
+    "puzzle_id": "2020-01-alter-nate",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2019-11-hooks-6",
+    "puzzle_id": "2020-01-alter-nate",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2019-11-hooks-6",
+    "puzzle_id": "2020-01-alter-nate",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2024-12-games-night",
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2024-12-games-night",
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2024-12-games-night",
+    "puzzle_id": "2025-03-hall-of-mirrors-3",
     "tier": "opus",
     "k": 3
   },
@@ -645,17 +645,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-11-wrong-division",
+    "puzzle_id": "2015-01-oh-shoot",
     "tier": "opus",
     "k": 3
   },

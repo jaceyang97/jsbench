@@ -15,32 +15,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2020-01-alter-nate",
+    "puzzle_id": "2020-02-single-cross",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2020-01-alter-nate",
+    "puzzle_id": "2020-02-single-cross",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2020-01-alter-nate",
+    "puzzle_id": "2020-02-single-cross",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "puzzle_id": "2025-04-sum-one-somewhere",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "puzzle_id": "2025-04-sum-one-somewhere",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2025-03-hall-of-mirrors-3",
+    "puzzle_id": "2025-04-sum-one-somewhere",
     "tier": "opus",
     "k": 3
   },
@@ -75,17 +75,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2014-12-deck-the-cards",
+    "puzzle_id": "2015-02-oh-chute",
     "tier": "opus",
     "k": 3
   },
@@ -120,32 +120,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2020-02-single-cross",
+    "puzzle_id": "2020-04-triads",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2020-02-single-cross",
+    "puzzle_id": "2020-04-triads",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2020-02-single-cross",
+    "puzzle_id": "2020-04-triads",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2025-04-sum-one-somewhere",
+    "puzzle_id": "2025-10-robot-baseball",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2025-04-sum-one-somewhere",
+    "puzzle_id": "2025-10-robot-baseball",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2025-04-sum-one-somewhere",
+    "puzzle_id": "2025-10-robot-baseball",
     "tier": "opus",
     "k": 3
   },
@@ -180,17 +180,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-01-oh-shoot",
+    "puzzle_id": "2015-03-ticker-treat",
     "tier": "opus",
     "k": 3
   },
@@ -225,32 +225,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2020-04-triads",
+    "puzzle_id": "2020-07-what-a-trit",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2020-04-triads",
+    "puzzle_id": "2020-07-what-a-trit",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2020-04-triads",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-10-robot-baseball",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-10-robot-baseball",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2025-10-robot-baseball",
+    "puzzle_id": "2020-07-what-a-trit",
     "tier": "opus",
     "k": 3
   },
@@ -285,17 +270,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-02-oh-chute",
+    "puzzle_id": "2015-04-hall-of-mirrors",
     "tier": "opus",
     "k": 3
   },
@@ -330,17 +315,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2020-07-what-a-trit",
+    "puzzle_id": "2021-04-bracketology-101",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2020-07-what-a-trit",
+    "puzzle_id": "2021-04-bracketology-101",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2020-07-what-a-trit",
+    "puzzle_id": "2021-04-bracketology-101",
     "tier": "opus",
     "k": 3
   },
@@ -375,17 +360,17 @@
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-03-ticker-treat",
+    "puzzle_id": "2015-05-tic-tac-oh",
     "tier": "opus",
     "k": 3
   },
@@ -420,32 +405,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2021-04-bracketology-101",
+    "puzzle_id": "2021-07-it-s-symmetric-2",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2021-04-bracketology-101",
+    "puzzle_id": "2021-07-it-s-symmetric-2",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2021-04-bracketology-101",
+    "puzzle_id": "2021-07-it-s-symmetric-2",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-06-polymath",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-06-polymath",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-04-hall-of-mirrors",
+    "puzzle_id": "2015-06-polymath",
     "tier": "opus",
     "k": 3
   },
@@ -480,32 +465,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "puzzle_id": "2021-08-robot-tug-of-war",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "puzzle_id": "2021-08-robot-tug-of-war",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "puzzle_id": "2021-08-robot-tug-of-war",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-05-tic-tac-oh",
+    "puzzle_id": "2015-08-number-cross-2",
     "tier": "opus",
     "k": 3
   },
@@ -540,32 +525,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2021-08-robot-tug-of-war",
+    "puzzle_id": "2021-12-robot-archery",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2021-08-robot-tug-of-war",
+    "puzzle_id": "2021-12-robot-archery",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2021-08-robot-tug-of-war",
+    "puzzle_id": "2021-12-robot-archery",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-06-polymath",
+    "puzzle_id": "2015-09-think-of-the-children",
     "tier": "opus",
     "k": 3
   },
@@ -600,32 +585,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2021-12-robot-archery",
+    "puzzle_id": "2022-04-almost-magic",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2021-12-robot-archery",
+    "puzzle_id": "2022-04-almost-magic",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2021-12-robot-archery",
+    "puzzle_id": "2022-04-almost-magic",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-08-number-cross-2",
+    "puzzle_id": "2015-10-hex-agony",
     "tier": "opus",
     "k": 3
   },
@@ -660,32 +645,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2022-04-almost-magic",
+    "puzzle_id": "2022-08-new-york-minute",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2022-04-almost-magic",
+    "puzzle_id": "2022-08-new-york-minute",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2022-04-almost-magic",
+    "puzzle_id": "2022-08-new-york-minute",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2016-04-long-journey",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2016-04-long-journey",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2015-09-think-of-the-children",
+    "puzzle_id": "2016-04-long-journey",
     "tier": "opus",
     "k": 3
   },
@@ -720,51 +705,6 @@
     "k": 3
   },
   {
-    "puzzle_id": "2022-08-new-york-minute",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2022-08-new-york-minute",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2022-08-new-york-minute",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2015-10-hex-agony",
-    "tier": "opus",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2022-12-die-agony",
-    "tier": "haiku",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2022-12-die-agony",
-    "tier": "sonnet",
-    "k": 3
-  },
-  {
-    "puzzle_id": "2022-12-die-agony",
-    "tier": "opus",
-    "k": 3
-  },
-  {
     "puzzle_id": "2022-11-pent-up-frustration-2",
     "tier": "haiku",
     "k": 3
@@ -780,32 +720,32 @@
     "k": 3
   },
   {
-    "puzzle_id": "2016-04-long-journey",
+    "puzzle_id": "2016-08-swing-time",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2016-04-long-journey",
+    "puzzle_id": "2016-08-swing-time",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2016-04-long-journey",
+    "puzzle_id": "2016-08-swing-time",
     "tier": "opus",
     "k": 3
   },
   {
-    "puzzle_id": "2016-08-swing-time",
+    "puzzle_id": "2022-12-die-agony",
     "tier": "haiku",
     "k": 3
   },
   {
-    "puzzle_id": "2016-08-swing-time",
+    "puzzle_id": "2022-12-die-agony",
     "tier": "sonnet",
     "k": 3
   },
   {
-    "puzzle_id": "2016-08-swing-time",
+    "puzzle_id": "2022-12-die-agony",
     "tier": "opus",
     "k": 3
   },
