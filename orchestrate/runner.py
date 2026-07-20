@@ -83,8 +83,12 @@ async def run_one_containerized(item: dict) -> dict:
     import uuid
     run_id = (f"{item['puzzle_id']}_{item['tier']}_s{item['sample_idx']}"
               f"_{uuid.uuid4().hex[:8]}")
+    # --no-deps: NEVER let concurrent `compose run` invocations manage the
+    # proxy dependency — at high concurrency they race and one recreates the
+    # proxy mid-batch, instantly killing every other client (observed as
+    # same-second error bursts). The orchestrator/watchdog owns the proxy.
     cmd = ["docker", "compose", "-f", str(ROOT / "docker" / "docker-compose.yml"),
-           "run", "--rm", "-T", "agent",
+           "run", "--rm", "-T", "--no-deps", "agent",
            "python3", "-m", "harness.run_agent",
            item["puzzle_id"], item["tier"],
            "--sample", str(item["sample_idx"]), "--run-id", run_id]
