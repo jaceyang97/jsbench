@@ -23,10 +23,10 @@ harness:
   runner_default: sdk        # sdk | cli
   effort: default            # do not override effort; record actual value per run
 
-concurrency: 24              # measured limit 2026-07-21: API (Scale tier, per-model buckets,
-                             # OTPM 2M vs p95 ~8K/run => 150+ per model) is NOT binding;
-                             # local VM (30GB/16 cores) + wall-clock fairness for compute-heavy
-                             # runs (occasional 5GB+/full-core solvers) caps practical concurrency
+concurrency: 12              # 2026-07-21: API (Scale tier, per-model buckets) supports 150+;
+                             # VM resources support ~24; but wsl-bootstrap SIGBUS-crashed minutes
+                             # after a 24-container start burst (and once at conc 3 after 6h) —
+                             # 12 stays clear of the burst-triggered WSL instability
 # 45 min hard kill per SESSION (covers all N feedback-guided attempts).
 # Cost is independently capped by max_budget_usd; this is the safety net so a
 # multi-attempt session on a hard puzzle isn't truncated mid-attempt.
