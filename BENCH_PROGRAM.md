@@ -108,3 +108,11 @@
   难题顶 $3 上限所致,协议内)。解题率 haiku 14/75、sonnet 27/75、opus 43/75。
   cp3 探针:**首见参赛模型记忆命中**(birthday-bash×sonnet+opus、beside-the-point
   ×opus,已入 probes.jsonl 供敏感性剔除);图片冒烟参赛模型全 ok。放行 cp3。
+- 2026-07-21 05:0x **API 余额耗尽,基准暂停**:"Credit balance is too low"
+  (billing_error),cp3 的 332 个 run 变成 $0 瞬死并被误记为 attempts_exhausted
+  终态。按 harness 级修正规则:332 条账本行已删除、run 目录归档至
+  runs/_billing_error_archive/(留审计),账本备份 runs.jsonl.bak_billing_*。
+  清洗后:cp1/cp2 完好,cp3 有效终态 73/405(solved 21),累计真实花费 $332.08。
+  已设 10 分钟级余额探针,恢复后自动续跑 cp3(幂等)。**待 Jace**:①充值;
+  ②预算决策——按 cp2/cp3 实际单价外推,cp3 余量 ~$180 + cp4 ~$280 → 总额
+  ~$790±80,贴着/超过 $780 熔断线,cp4 可能需要加预算或减 k 或接受部分完成。
