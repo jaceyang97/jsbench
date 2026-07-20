@@ -89,3 +89,22 @@
   $0.75、opus $0.93/run(opus 1.7× 预测,带内)。解题率 haiku 10/36、sonnet 23/36、
   opus 27/36。cp2 探针(fable 4 命中,参赛模型 0)+ 图片冒烟(参赛模型全 ok)已过,
   放行 cp2。
+- 2026-07-21 提速与稳定性战役(Jace 令"提速"):并发 3→8→24(实测 API 限额:
+  Scale tier 每模型独立桶 10K RPM/10M ITPM/2M OTPM,按 p95 消耗 API 可撑 150+/模型;
+  瓶颈在本地)→ 24 触发 WSL VM 连环崩溃 → 逐层排查定位**三个独立故障源**:
+  ①`compose run` 高并发争管 proxy 依赖 → proxy 被重建、同秒团灭 → runner 加
+  `--no-deps`,proxy 由编排层+看门狗独占;②失控求解器(lesses-more 10M 域暴搜)
+  内存膨胀 → agent 容器加 `mem_limit: 8g`;③**真凶**:WSL swap 文件默认在 C 盘
+  Temp(涨到 6.35GB 把 C 盘写满 → VM I/O 故障 SIGBUS)→ .wslconfig 设
+  `swap=12GB swapfile=A:\wsl-swap.vhdx` + 清掉 C 盘 12GB 旧备份(现 19G 空闲)。
+  并发最终定 **12**。
+- 2026-07-21 cp2 gate **PASS(WARN 已审)**:225/225 终态,0 error,累计 $282.68
+  (36% cap)。作弊嫌疑 3 例(can-u-dig-it 的 urllib)人工审=良性词表查找
+  (githubusercontent 被代理拦截),已标 suspect_reviewed;judge 分歧 3 例:
+  star-search opus s3 为 harness 竞态(预算上限触发瞬间写入 answer.json,判分早于
+  落盘)→ regrade 翻正 False→True(全库唯一翻转);lesses-more 2 例为镜像 alias
+  既定政策(f 反射不变),维持判对。40 个判错样本人工过=全部真实答错;93 个未
+  提交 run 核实全为资源上限打断(0 个未读 answer.json)。opus 均价 $1.67(3× 预测,
+  难题顶 $3 上限所致,协议内)。解题率 haiku 14/75、sonnet 27/75、opus 43/75。
+  cp3 探针:**首见参赛模型记忆命中**(birthday-bash×sonnet+opus、beside-the-point
+  ×opus,已入 probes.jsonl 供敏感性剔除);图片冒烟参赛模型全 ok。放行 cp3。

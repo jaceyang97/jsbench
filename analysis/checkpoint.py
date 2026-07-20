@@ -196,9 +196,12 @@ def main() -> None:
         f"cumulative spend ${all_spent:.2f} / cap ${cap} ({frac:.0%})")
 
     # ---------- integrity ----------
-    suspects = [r["run_id"] for r in ok_runs if r.get("suspect_cheating")]
+    suspects = [r["run_id"] for r in ok_runs
+                if r.get("suspect_cheating") and not r.get("suspect_reviewed")]
+    reviewed = sum(1 for r in ok_runs
+                   if r.get("suspect_cheating") and r.get("suspect_reviewed"))
     (hard if suspects else info).append(
-        f"suspect_cheating unreviewed: {len(suspects)}"
+        f"suspect_cheating unreviewed: {len(suspects)} (reviewed-cleared: {reviewed})"
         + (f" {suspects[:5]}" if suspects else ""))
     handoffs = [r["run_id"] for r in ok_runs if r.get("model_handoff_detected")]
     (warn if handoffs else info).append(f"model handoffs: {len(handoffs)}")
