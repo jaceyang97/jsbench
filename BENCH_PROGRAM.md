@@ -73,3 +73,19 @@
   (trit 精确换算),防裸报数值作弊;normalize 的 multi 类型增加 alias 支持
   (轮转等价、"and" 措辞),22/22 单测过;⑤cp0/cp1/cp2 计划在历次重建中逐字节
   不变(已验证),校准题 sample_1 复用逻辑未受影响。
+- 2026-07-20 cp1 gate 审计 **PASS(WARN 已审)**,99+9 runs 全终态,累计 $70.63(9% cap)。
+  期间基建事故与修复:①C 盘被 Docker VHD 写满 → 40 run 瞬时 infra error($0,无污染)
+  → 数据盘经 NTFS junction 迁 A 盘(写探针验证)+ clean_start_docker.sh 固化启动
+  (每次会话都会留僵尸 socket,Jace 已 factory reset 一次);②SDK 1MiB 流缓冲被
+  opus 大输出撑爆 1 例 → 提高到 16MiB(健壮性,prompt SHA 不变);③proxy 容器
+  一次崩溃重启造成 3 个瞬时失败;全部 error keys 幂等补跑,最终 0 error。
+  判分审计:llm_judge 31 例 0 分歧;24 个提交判错样本逐一人工过 = 全部真实答错
+  (无归一化漏判;planetary-parade 上 sonnet+opus 全部收敛同一错误对 1/32,3/16,
+  跨模型共同建模错误,值得写进报告);24 个未提交 run 逐一核实 = 全部资源上限打断
+  (haiku 30 turns / sonnet $1.5 / opus $3.0),workdir 零未读 answer.json,非 harness bug。
+  checkpoint.py 度量口径修正(非阈值变更):账本按 key 去重取终态(infra 重试的
+  被覆盖行单列 INFO)、无图题不计图片投递失败、提交率改为自主结束 run 口径
+  (=100%),资源上限打断率单列(22.2%,WARN 已审)。成本:haiku $0.28、sonnet
+  $0.75、opus $0.93/run(opus 1.7× 预测,带内)。解题率 haiku 10/36、sonnet 23/36、
+  opus 27/36。cp2 探针(fable 4 命中,参赛模型 0)+ 图片冒烟(参赛模型全 ok)已过,
+  放行 cp2。

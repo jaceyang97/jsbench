@@ -58,6 +58,21 @@ def load_runs() -> list[dict]:
     return out
 
 
+def effective_runs(raw: list[dict]) -> tuple[list[dict], int]:
+    """Latest record per (puzzle, model, sample) — the ledger is append-only
+    and infra-error runs get retried, so superseded lines must not be counted
+    as failures of the final batch state. Returns (effective, n_superseded)."""
+    seen: dict[tuple, dict] = {}
+    for r in raw:
+        seen[(r.get("puzzle_id"), r.get("model_requested"), r.get("sample_idx"))] = r
+    return list(seen.values()), len(raw) - len(seen)
+
+
+def bundle_has_images(puzzle_id: str) -> bool:
+    d = ROOT / "data" / "puzzles" / str(puzzle_id) / "images"
+    return d.is_dir() and any(d.iterdir())
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--batch", type=str, default=None,
@@ -66,7 +81,8 @@ def main() -> None:
     ap.add_argument("--name", type=str, required=True)
     args = ap.parse_args()
 
-    runs = [r for r in load_runs() if r.get("arm") == "agentic"]
+    raw = [r for r in load_runs() if r.get("arm") == "agentic"]
+    runs, n_superseded = effective_runs(raw)
     if args.batch:
         plan = json.loads(Path(args.batch).read_text(encoding="utf-8"))
         keys = {(i["puzzle_id"],) for i in plan}
@@ -83,10 +99,12 @@ def main() -> None:
         sys.exit(2)
 
     # ---------- infra ----------
+    if n_superseded:
+        info.append(f"superseded ledger lines (infra retries, not counted): {n_superseded}")
     errors = [r for r in runs_b if r.get("exit_reason") == "error"]
     er = len(errors) / n
     (hard if er > TH["error_rate_hard"] else warn if er > TH["error_rate_warn"] else info).append(
-        f"error rate {er:.1%} ({len(errors)}/{n})"
+        f"error rate {er:.1%} ({len(errors)}/{n}) [final states]"
         + (f" — run_ids: {[r.get('run_id') for r in errors][:5]}" if errors else ""))
 
     timeouts = sum(1 for r in runs_b if r.get("exit_reason") == "timeout")
@@ -95,10 +113,21 @@ def main() -> None:
         f"timeout rate {tr:.1%} ({timeouts}/{n})")
 
     ok_runs = [r for r in runs_b if r.get("exit_reason") != "error"]
-    submitted = sum(1 for r in ok_runs if r.get("submitted_answer"))
-    sr = submitted / max(len(ok_runs), 1)
+    # runs killed by resource caps (max turns / budget / wall clock) never get
+    # to write answer.json — that is model capability data, not an infra
+    # failure. Submission health is measured over self-terminated runs; a high
+    # cap-hit rate is surfaced separately (WARN, review the transcripts).
+    cap_hit = [r for r in ok_runs
+               if r.get("exit_reason") == "attempts_exhausted"
+               and not r.get("submitted_answer")]
+    ch = len(cap_hit) / max(len(ok_runs), 1)
+    (warn if ch > 0.20 else info).append(
+        f"no-answer rate (resource-cap terminations): {ch:.1%} ({len(cap_hit)}/{len(ok_runs)})")
+    self_ended = [r for r in ok_runs if r not in cap_hit]
+    submitted = sum(1 for r in self_ended if r.get("submitted_answer"))
+    sr = submitted / max(len(self_ended), 1)
     (hard if sr < TH["submission_rate_hard"] else warn if sr < TH["submission_rate_warn"] else info).append(
-        f"submission rate {sr:.1%} ({submitted}/{len(ok_runs)})")
+        f"submission rate {sr:.1%} ({submitted}/{len(self_ended)} self-terminated runs)")
 
     non_bare = [r for r in ok_runs if not r.get("bare_mode")]
     (hard if non_bare else info).append(
@@ -108,8 +137,10 @@ def main() -> None:
     non_sess = [r for r in ok_runs if r.get("runner") not in ("sdk-session",)]
     (warn if non_sess else info).append(f"non-standard runner: {len(non_sess)}")
 
-    img_runs = [r for r in ok_runs if r.get("image_delivered") is False]
-    (hard if img_runs else info).append(f"image-delivery failures: {len(img_runs)}")
+    img_runs = [r for r in ok_runs if r.get("image_delivered") is False
+                and bundle_has_images(r.get("puzzle_id"))]
+    (hard if img_runs else info).append(
+        f"image-delivery failures (image puzzles only): {len(img_runs)}")
 
     missing_transcript = [r for r in ok_runs
                           if not (ROOT / r.get("transcript_path", "@none")).exists()]
