@@ -17,6 +17,11 @@ services:
     build: .
     # Claude Code refuses bypassPermissions as root — run as the node user
     user: node
+    # Runaway solvers (e.g. vectorized 10M-range brute force) have ballooned
+    # past 10GB and crashed the whole WSL VM (SIGBUS storms killing every
+    # concurrent run). Cap the container so an OOM stays inside the offending
+    # run; 8g comfortably covers every legitimately observed peak (~5.6GB).
+    mem_limit: 8g
     environment:
       - HOME=/home/node
       - HTTPS_PROXY=http://proxy:8888
