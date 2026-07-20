@@ -175,6 +175,11 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         cwd=str(workdir),
         max_turns=mcfg["max_turns"],
         max_budget_usd=mcfg["max_budget_usd"],
+        # agents occasionally emit single JSON messages >1MiB (e.g. catting a
+        # large generated file); the SDK's default 1MiB stream buffer then
+        # kills the run as harness_error. Robustness cap only — no effect on
+        # agent behavior or scoring.
+        max_buffer_size=16 * 1024 * 1024,
         allowed_tools=ALLOWED_TOOLS,
         disallowed_tools=DISALLOWED_TOOLS,
         permission_mode="bypassPermissions",
