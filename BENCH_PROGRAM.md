@@ -159,3 +159,21 @@
   (audit_transcripts 只能覆盖存活 622 个)。这是我的错误,已上报 Jace。
   ③受影响 3 题(tile-and-trouble-2、poetry-in-motion、some-ones-somewhere)26 条账本
   记录清出,27 样本在封堵后 harness 全部重跑。
+- 2026-07-22 **全量跑分完成 — 最终交付**。1206 个独立采样(134 题 × 3 模型 × k=3)
+  全部终态、**0 error**、提交率 96.1%、0 未审 suspect(20 例网络访问全人工核为良性:
+  黑名单站点 000/403 被拦,其余为策略允许的参考站)、bare/图片投递/malformed 全绿。
+  累计 **$987.79**(Jace 授权熔断线 $1000)。**主结果 pass@3(Chen 无偏)**:
+  opus 4.8 = **70.1% ± 4.0%**,sonnet 5 = **47.8% ± 4.3%**,haiku 4.5 = **24.6% ± 3.7%**;
+  三对配对差全部显著(opus−sonnet +20.1pp、sonnet−haiku +24.6pp、opus−haiku +44.8pp,
+  均 95%CI 不含 0)。**记忆污染敏感性**:剔除探针命中题后几乎不变(opus 70.1→68.8%,
+  sonnet/haiku 基本持平),记忆不驱动结论。pre/post-cutoff:post 子组(5-16 题)三模型
+  均大幅走低(opus 63→13%),仅描述性。成本:haiku $0.27、sonnet $0.96、opus $1.25/run
+  (opus 2.3× 原始预测,难题顶 $3 上限所致,已知带外)。判分:全程 4 处 judge 驱动的
+  grader 修正 + regrade(star-search 竞态、single-cross 容差、rainbow-bagel ≈ 拆分、
+  lesses-more 轮转 alias),确定性主判 + 证书验证器(sos/tangled/knight_moves_6/
+  what_a_trit)防裸报。**诚实声明**:①隔离漏洞(容器内判分+全 repo 挂载)已彻底封堵
+  (判分移宿主 + repo 只读 + 答案面全 tmpfs 屏蔽 + /out 隔离输出),9 个曾污染样本所在
+  的 3 道题共 27 样本已在密封 harness 全部重跑(封堵后模型诚实判错,反证污染真实);
+  ②我的清理脚本误删 662/1284 个 run 目录的 transcript,账本完好、指标不受影响,但
+  transcript 级审计只覆盖存活的 ~600 个。交付物:runs/FINAL_REPORT.md、
+  runs/FINAL_audit_transcripts.txt、runs/checkpoints/final_report.md。
