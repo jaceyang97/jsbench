@@ -127,12 +127,21 @@ async def run_one_containerized(item: dict) -> dict:
     import uuid
     run_id = (f"{item['puzzle_id']}_{item['tier']}_s{item['sample_idx']}"
               f"_{uuid.uuid4().hex[:8]}")
+    # Pre-create THIS run's output dir on the host and bind ONLY it into the
+    # container's otherwise-tmpfs-masked /bench/runs. The agent thus cannot see
+    # any other run's transcript or grader_snapshot (the mount-leak fix).
+    host_run_dir = ROOT / CONFIG["paths"]["runs"] / run_id
+    host_run_dir.mkdir(parents=True, exist_ok=True)
+    # Bind the writable output at /out (OUTSIDE the read-only, answer-masked
+    # /bench). run_agent writes there via JSB_RUN_DIR; the host reads it back.
+    run_mount = f"{host_run_dir.as_posix()}:/out"
     # --no-deps: NEVER let concurrent `compose run` invocations manage the
     # proxy dependency — at high concurrency they race and one recreates the
     # proxy mid-batch, instantly killing every other client (observed as
     # same-second error bursts). The orchestrator/watchdog owns the proxy.
     cmd = ["docker", "compose", "-f", str(ROOT / "docker" / "docker-compose.yml"),
-           "run", "--rm", "-T", "--no-deps", "agent",
+           "run", "--rm", "-T", "--no-deps",
+           "-v", run_mount, "-e", "JSB_RUN_DIR=/out", "agent",
            "python3", "-m", "harness.run_agent",
            item["puzzle_id"], item["tier"],
            "--sample", str(item["sample_idx"]), "--run-id", run_id]

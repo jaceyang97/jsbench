@@ -54,18 +54,32 @@ if pip3 install --break-system-packages --quiet --no-cache-dir tabulate 2>/dev/n
   echo "OK: pip install succeeded"
 else echo "FAIL: pip install failed"; fail=1; fi
 
-echo "== answer stores must be masked (no in-container grading leak) =="
-# data/graders holds answers; data/raw holds solution_md. Both are tmpfs-masked
-# to empty. A non-empty listing means the agent could read the answer.
+echo "== answer surfaces must be unreachable inside the container =="
+# Every location that could reveal an answer or solution must be gone:
+#   data/graders (answers), data/raw (solution_md), data/review_sheet.md
+#   (answers+solutions), runs/ (prior transcripts + run.json grader_snapshots).
+# Only data/puzzles (clean problem bundles) may remain under /bench/data.
 for d in /bench/data/graders /bench/data/raw; do
-  n=$(ls -A "$d" 2>/dev/null | wc -l)
-  if [ "$n" = "0" ]; then echo "OK mask : $d is empty"; else
-    echo "FAIL(leak): $d exposes $n entries"; fail=1; fi
+  if [ -e "$d" ] && [ "$(ls -A "$d" 2>/dev/null | wc -l)" != "0" ]; then
+    echo "FAIL(leak): $d is populated"; fail=1
+  else echo "OK mask : $d absent/empty"; fi
 done
-# spot-check: a known grader answer must NOT be catt-able
-if cat /bench/data/graders/2014-01-sum-of-squares.json 2>/dev/null | grep -q answer; then
-  echo "FAIL(leak): grader JSON is readable inside the container"; fail=1
-else echo "OK mask : grader JSON unreadable"; fi
+if [ -e /bench/data/review_sheet.md ]; then
+  echo "FAIL(leak): data/review_sheet.md is present"; fail=1
+else echo "OK mask : review_sheet.md absent"; fi
+# runs/ history must be empty except THIS run's own dir (a single writable bind)
+others=$(ls -A /bench/runs 2>/dev/null | grep -v "$(basename "$(pwd)" 2>/dev/null)" | wc -l)
+echo "OK info : /bench/runs entries visible = $(ls -A /bench/runs 2>/dev/null | wc -l) (expect just this run)"
+# Catch-all over the DATA tree (source code legitimately names the field
+# "solution_md"; only actual data files carry answers). No grader schema
+# (answer_type) and no solution text may survive anywhere under /bench/data.
+if grep -rlq '"answer_type"\|"solution_md"' /bench/data 2>/dev/null; then
+  echo "FAIL(leak): answer/solution data reachable under /bench/data"; fail=1
+else echo "OK mask : no answer/solution data under /bench/data"; fi
+# and confirm the clean bundle IS still present (needed to run)
+if [ -f /bench/data/puzzles/2014-01-sum-of-squares/problem.md ]; then
+  echo "OK bundle: puzzle bundles are mounted"
+else echo "FAIL: puzzle bundle missing (agent cannot run)"; fail=1; fi
 
 if [ $fail -eq 0 ]; then echo "ISOLATION VERIFIED"; else echo "ISOLATION FAILED"; fi
 exit $fail

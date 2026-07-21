@@ -28,18 +28,24 @@ services:
       - HTTP_PROXY=http://proxy:8888
       - NO_PROXY=localhost,127.0.0.1
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    # Isolation model (2026-07-22, after the mount-leak finding):
+    #   - the whole repo is mounted READ-ONLY so the agent can import the
+    #     harness code, but cannot write anywhere except its own run dir;
+    #   - /bench/data and /bench/runs are wiped to empty tmpfs, hiding EVERY
+    #     answer-bearing file: data/graders (answers), data/raw (solution_md),
+    #     data/review_sheet.md (answers+solutions), and runs/ (all prior
+    #     transcripts + run.json grader_snapshots);
+    #   - only the clean puzzle bundles (data/puzzles, problem+images+metadata,
+    #     no answers) are mounted back read-only;
+    #   - the orchestrator binds THIS run's writable output dir at /out (a
+    #     path OUTSIDE /bench) and sets JSB_RUN_DIR=/out; run_agent writes there
+    #     and the host reads it back as runs/<id>/. Grading is HOST-side only.
     volumes:
-      - ..:/bench
-    # Mask the answer stores with empty in-memory filesystems so the agent's
-    # Bash tool cannot read them even though the repo is bind-mounted. Grading
-    # runs on the HOST (orchestrate.runner.grade_on_host), so the container
-    # never needs these. Defense in depth for the "agent reads /bench/data/
-    # graders" leak class. runs/ is left visible (the agent needs its own
-    # workdir) but completed run.json files no longer carry grader_snapshot at
-    # container-write time — that field is filled host-side.
+      - ..:/bench:ro
+      - ../data/puzzles:/bench/data/puzzles:ro
     tmpfs:
-      - /bench/data/graders
-      - /bench/data/raw
+      - /bench/data
+      - /bench/runs
     working_dir: /bench
     networks: [bench_internal]
     depends_on: [proxy]

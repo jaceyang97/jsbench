@@ -168,8 +168,13 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
 
     mcfg = MODELS[tier]
     run_id = run_id or f"{puzzle_id}_{tier}_s{sample_idx}_{uuid.uuid4().hex[:8]}"
-    run_dir = RUNS_DIR / run_id
-    run_dir.mkdir(parents=True, exist_ok=False)
+    # In the container, /bench is read-only and /bench/runs is a masked tmpfs;
+    # the orchestrator binds this run's writable output dir at JSB_RUN_DIR
+    # (outside /bench). The host then reads it back as runs/<run_id>/.
+    import os
+    out_base = os.environ.get("JSB_RUN_DIR")
+    run_dir = Path(out_base) if out_base else (RUNS_DIR / run_id)
+    run_dir.mkdir(parents=True, exist_ok=True)
     workdir = build_workdir(puzzle_id, run_dir)
 
     meta = json.loads((workdir / "metadata.json").read_text(encoding="utf-8"))
@@ -399,7 +404,8 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         "grade_method": None,            # host fills
         "grader_needs_review": None,     # host fills
         "grader_snapshot": None,         # host fills (container has no graders)
-        "transcript_path": str(transcript_path.relative_to(ROOT)),
+        # canonical host-relative path (run_dir may be an out-of-tree bind)
+        "transcript_path": f"{CONFIG['paths']['runs']}/{run_id}/transcript.jsonl",
     }
     (run_dir / "run.json").write_text(
         json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
