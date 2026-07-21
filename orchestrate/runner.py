@@ -135,14 +135,21 @@ async def run_one_containerized(item: dict) -> dict:
     # Bind the writable output at /out (OUTSIDE the read-only, answer-masked
     # /bench). run_agent writes there via JSB_RUN_DIR; the host reads it back.
     run_mount = f"{host_run_dir.as_posix()}:/out"
+    # Dispatch on the model's harness: Claude models -> Claude Code container
+    # (`agent` service, harness.run_agent); OpenAI models -> Codex container
+    # (`agent-codex`, harness.run_agent_codex). Everything else (isolation,
+    # /out bind, host-side grading) is identical between the two.
+    harness = MODELS[item["tier"]].get("harness", "claude-code")
+    service, module = (("agent-codex", "harness.run_agent_codex")
+                       if harness == "codex" else ("agent", "harness.run_agent"))
     # --no-deps: NEVER let concurrent `compose run` invocations manage the
     # proxy dependency — at high concurrency they race and one recreates the
     # proxy mid-batch, instantly killing every other client (observed as
     # same-second error bursts). The orchestrator/watchdog owns the proxy.
     cmd = ["docker", "compose", "-f", str(ROOT / "docker" / "docker-compose.yml"),
            "run", "--rm", "-T", "--no-deps",
-           "-v", run_mount, "-e", "JSB_RUN_DIR=/out", "agent",
-           "python3", "-m", "harness.run_agent",
+           "-v", run_mount, "-e", "JSB_RUN_DIR=/out", service,
+           "python3", "-m", module,
            item["puzzle_id"], item["tier"],
            "--sample", str(item["sample_idx"]), "--run-id", run_id]
     proc = await asyncio.create_subprocess_exec(

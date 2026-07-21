@@ -50,7 +50,44 @@ services:
     networks: [bench_internal]
     depends_on: [proxy]
 
+  # --- OpenAI / Codex harness (mirror of proxy + agent above) ---------------
+  # Symmetric isolation: identical to the Claude services except the inference
+  # endpoint. proxy-codex allows api.openai.com and blocks anthropic.com (+ the
+  # same solution sources); agent-codex runs the Codex CLI instead of Claude
+  # Code. Same read-only repo, same answer-store tmpfs masks, same /out bind.
+  proxy-codex:
+    build:
+      context: ./proxy
+      args:
+        FILTER: filter.codex
+    networks: [bench_internal_codex, egress]
+    restart: unless-stopped
+
+  agent-codex:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.codex
+    user: node
+    mem_limit: 8g
+    environment:
+      - HOME=/home/node
+      - HTTPS_PROXY=http://proxy-codex:8888
+      - HTTP_PROXY=http://proxy-codex:8888
+      - NO_PROXY=localhost,127.0.0.1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ..:/bench:ro
+      - ../data/puzzles:/bench/data/puzzles:ro
+    tmpfs:
+      - /bench/data
+      - /bench/runs
+    working_dir: /bench
+    networks: [bench_internal_codex]
+    depends_on: [proxy-codex]
+
 networks:
   bench_internal:
     internal: true      # no direct egress for agents
+  bench_internal_codex:
+    internal: true      # no direct egress for codex agents
   egress: {}

@@ -22,6 +22,9 @@ harness:
   # irrelevant inside the Linux container.
   runner_default: sdk        # sdk | cli
   effort: default            # do not override effort; record actual value per run
+  # OpenAI GPT-5.6 tiers run under the Codex CLI (native-agent product
+  # comparison). Pinned to match docker/Dockerfile.codex.
+  codex_version: "0.145.0"
 
 concurrency: 12              # 2026-07-21: API (Scale tier, per-model buckets) supports 150+;
                              # VM resources support ~24; but wsl-bootstrap SIGBUS-crashed minutes

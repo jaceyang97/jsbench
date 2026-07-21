@@ -1,0 +1,782 @@
+[
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-10-candy-collectors",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-02-single-cross",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-02-single-cross",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-02-single-cross",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-04-sum-one-somewhere",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-04-sum-one-somewhere",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-04-sum-one-somewhere",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-06-some-ones-somewhere",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-06-some-ones-somewhere",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-06-some-ones-somewhere",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-01-somewhat-square-sudoku",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-01-somewhat-square-sudoku",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-01-somewhat-square-sudoku",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-02-oh-chute",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-02-oh-chute",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-02-oh-chute",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-06-circle-time",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-06-circle-time",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-06-circle-time",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-12-twenty-four-seven-2-by-2-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-12-twenty-four-seven-2-by-2-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-12-twenty-four-seven-2-by-2-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-04-triads",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-04-triads",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-04-triads",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-10-robot-baseball",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-07-robot-road-trip",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-07-robot-road-trip",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-07-robot-road-trip",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-02-top-score-give-or-take",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-03-ticker-treat",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-03-ticker-treat",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-03-ticker-treat",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-08-study-and-ponder",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-08-study-and-ponder",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-08-study-and-ponder",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-01-figurine-figuring",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-01-figurine-figuring",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-01-figurine-figuring",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-07-what-a-trit",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-07-what-a-trit",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2020-07-what-a-trit",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-08-dogs-playing-poker",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-09-hooks-11",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-09-hooks-11",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-09-hooks-11",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-05-tic-tac-oh",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-05-tic-tac-oh",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-05-tic-tac-oh",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-02-hooks-7",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-02-hooks-7",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-02-hooks-7",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-03-tit-for-tat",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-03-tit-for-tat",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-03-tit-for-tat",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-04-bracketology-101",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-04-bracketology-101",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-04-bracketology-101",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-01-timely-journey",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-01-timely-journey",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-01-timely-journey",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-11-shut-the-box",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-11-shut-the-box",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-11-shut-the-box",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-08-number-cross-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-08-number-cross-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-08-number-cross-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-09-knight-moves-4",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-09-knight-moves-4",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-09-knight-moves-4",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-05-past-tens",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-05-past-tens",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-05-past-tens",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-07-it-s-symmetric-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-09-think-of-the-children",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-09-think-of-the-children",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-09-think-of-the-children",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-10-robot-swimming-trials",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-06-robot-weightlifting",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-06-robot-weightlifting",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-06-robot-weightlifting",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-08-robot-tug-of-war",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-08-robot-tug-of-war",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-08-robot-tug-of-war",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-10-hex-agony",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-10-hex-agony",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-10-hex-agony",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-11-split-division-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-11-split-division-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-11-split-division-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-03-the-hidden-warning",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-12-robot-archery",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-12-robot-archery",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2021-12-robot-archery",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-04-long-journey",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-04-long-journey",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-04-long-journey",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-01-hooks-8",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-05-robot-updated-swimming-trials",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-05-robot-updated-swimming-trials",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-05-robot-updated-swimming-trials",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-08-new-york-minute",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-08-new-york-minute",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-08-new-york-minute",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-09-chess-dance",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-09-chess-dance",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-09-chess-dance",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-06-block-party-4",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-06-block-party-4",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-06-block-party-4",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-09-pair-dance-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-09-pair-dance-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-09-pair-dance-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-11-pent-up-frustration-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-11-pent-up-frustration-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-11-pent-up-frustration-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-11-the-wright-stuff",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-11-the-wright-stuff",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-11-the-wright-stuff",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-07-andys-morning-stroll",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-10-the-marshy-mess",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-10-the-marshy-mess",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-10-the-marshy-mess",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-01-hex-agony-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-01-hex-agony-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-01-hex-agony-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-12-die-agony",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-12-die-agony",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-12-die-agony",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-07-split-division",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-07-split-division",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-07-split-division",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-10-turn-based-strategy-game",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-10-turn-based-strategy-game",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-10-turn-based-strategy-game",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-12-crosswords",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-12-crosswords",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-12-crosswords",
+    "tier": "gpt-sol",
+    "k": 3
+  }
+]

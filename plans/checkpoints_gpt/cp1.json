@@ -1,0 +1,182 @@
+[
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-12-robot-javelin",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-12-robot-javelin",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2025-12-robot-javelin",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-03-planetary-parade",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-03-planetary-parade",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-03-planetary-parade",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-11-pair-dance",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-02-hooks",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-02-hooks",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-02-hooks",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-10-tri-tri-again",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-07-good-chemistry",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-01-rather-square-sudoku",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-01-rather-square-sudoku",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-01-rather-square-sudoku",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-04-where-in-the-world",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-04-where-in-the-world",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-04-where-in-the-world",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-03-it-s-symmetric",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-03-it-s-symmetric",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-03-it-s-symmetric",
+    "tier": "gpt-sol",
+    "k": 3
+  }
+]

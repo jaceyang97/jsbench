@@ -1,0 +1,377 @@
+[
+  {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-02-subtiles-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-04-can-u-dig-it",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-05-arch-madness",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-01-lesses-more",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-09-getting-from-a-to-b",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-03-robot-long-jump",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-03-robot-long-jump",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-03-robot-long-jump",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-12-professor-rando",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-12-professor-rando",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-12-professor-rando",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-04-chess-pains-white-to-move",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-04-chess-pains-white-to-move",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-04-chess-pains-white-to-move",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-12-star-search",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-12-star-search",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-12-star-search",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-02-hooks-3",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-02-hooks-3",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-02-hooks-3",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-09-spiral-region",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-09-spiral-region",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-09-spiral-region",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-07-triangle-math",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2026-06-regional-artwork",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-02-twenty-four-seven-four-in-one",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-10-a-weird-tour",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-10-a-weird-tour",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-10-a-weird-tour",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-04-arc-edge-acreage",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-01-professor-rando-redux",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-01-professor-rando-redux",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-01-professor-rando-redux",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-05-tile-and-trouble",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-02-what-about-bob",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-06-twenty-four-seven",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-12-block-party-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2018-10-subtiles",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-05-game-night",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-05-game-night",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-05-game-night",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-12-hall-of-mirrors-2",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-06-hooks-9",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-06-hooks-9",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2023-06-hooks-9",
+    "tier": "gpt-sol",
+    "k": 3
+  }
+]

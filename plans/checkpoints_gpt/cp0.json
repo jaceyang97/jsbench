@@ -1,0 +1,47 @@
+[
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-luna",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-terra",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2014-01-sum-of-squares",
+    "tier": "gpt-sol",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-luna",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-terra",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-03-knight-moves",
+    "tier": "gpt-sol",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-luna",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-terra",
+    "k": 1
+  },
+  {
+    "puzzle_id": "2016-05-hooks-2",
+    "tier": "gpt-sol",
+    "k": 1
+  }
+]
