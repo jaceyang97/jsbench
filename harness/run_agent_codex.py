@@ -185,21 +185,45 @@ def run_codex(puzzle_id: str, tier: str, sample_idx: int = 1,
     timed_out = False
     raw_path = run_dir / "codex_raw.jsonl"
 
+    # Stream the event JSONL so we can enforce BOTH rails the Claude SDK does:
+    #   - wall-clock deadline, and
+    #   - the per-run USD budget cap (Codex has no native cost cap) — checked at
+    #     each turn.completed, the analog of the SDK stopping between operations.
+    # This keeps hard puzzles from giving GPT more compute than its Claude
+    # counterpart (whose session stops at max_budget_usd).
+    import threading, queue as _queue
     env = {**os.environ, "CODEX_HOME": str(codex_home)}
     tf = transcript_path.open("a", encoding="utf-8")
     rawf = raw_path.open("a", encoding="utf-8")
+    deadline = t0 + (timeout_s or CONFIG["wall_clock_timeout_s"])
+    budget = mcfg["max_budget_usd"]
+    over_budget = False
+    proc = subprocess.Popen(cmd, env=env, text=True, bufsize=1,
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
     try:
-        proc = subprocess.run(
-            cmd, env=env, text=True, capture_output=True, input=prompt,
-            timeout=(timeout_s or CONFIG["wall_clock_timeout_s"]))
-        stdout, stderr = proc.stdout, proc.stderr
-    except subprocess.TimeoutExpired as e:
-        timed_out = True
-        stdout = e.stdout.decode() if isinstance(e.stdout, bytes) else (e.stdout or "")
-        stderr = e.stderr.decode() if isinstance(e.stderr, bytes) else (e.stderr or "")
-    for ln in stdout.splitlines():
-        ln = ln.strip()
-        if not ln or not ln.startswith("{"):
+        proc.stdin.write(prompt)
+        proc.stdin.close()
+    except Exception:
+        pass
+    q: _queue.Queue = _queue.Queue()
+    threading.Thread(target=lambda: ([q.put(l) for l in proc.stdout], q.put(None)),
+                     daemon=True).start()
+    while True:
+        if time.monotonic() > deadline:
+            timed_out = True
+            proc.terminate()
+            break
+        try:
+            line = q.get(timeout=1.0)
+        except _queue.Empty:
+            if proc.poll() is not None:
+                break
+            continue
+        if line is None:
+            break
+        ln = line.strip()
+        if not ln.startswith("{"):
             continue
         try:
             ev = json.loads(ln)
@@ -207,6 +231,19 @@ def run_codex(puzzle_id: str, tier: str, sample_idx: int = 1,
             continue
         rawf.write(ln + "\n")
         _map_event(ev, round(time.monotonic() - t0, 2), tf, counters, usage_acc)
+        if ev.get("type") == "turn.completed" and \
+                _cost_usd(usage_acc, mcfg["pricing_per_mtok"]) >= budget:
+            over_budget = True
+            proc.terminate()
+            break
+    try:
+        proc.wait(timeout=10)
+    except Exception:
+        proc.kill()
+    try:
+        stderr = proc.stderr.read() if proc.stderr else ""
+    except Exception:
+        stderr = ""
     tf.close()
     rawf.close()
     (run_dir / "stderr.log").write_text(stderr or "", encoding="utf-8")
@@ -214,14 +251,16 @@ def run_codex(puzzle_id: str, tier: str, sample_idx: int = 1,
     wall_time_s = round(time.monotonic() - t0, 1)
     submitted_answer = read_submitted_answer(workdir)
 
-    if timed_out:
-        exit_reason = "timeout"
-    elif not logged_in:
-        exit_reason = "error"
-    elif counters["failed"] and submitted_answer is None:
+    if not logged_in:
         exit_reason = "error"
     elif submitted_answer is not None:
         exit_reason = "submitted"
+    elif over_budget:
+        exit_reason = "max_budget"
+    elif timed_out:
+        exit_reason = "timeout"
+    elif counters["failed"]:
+        exit_reason = "error"
     else:
         exit_reason = "attempts_exhausted"
 
