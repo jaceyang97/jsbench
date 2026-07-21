@@ -133,10 +133,35 @@ def verify_knight_moves_6(submitted: str, grader: dict) -> tuple[bool, str]:
     return True, "km6-verified"
 
 
+def verify_what_a_trit(submitted: str, grader: dict) -> tuple[bool, str]:
+    """2020-07 What a Trit.
+
+    524293 must be written as a quotient X/Y of two base-4 numerals over
+    digits {0, 1, T=-1}. Multiple correct solutions exist and JS accepted
+    any of them -> verify by exact conversion: value(X) == 524293 * value(Y).
+    """
+    s = re.sub(r"\s", "", str(submitted)).upper()
+    m = re.fullmatch(r"\(?([01T]+)\)?/\(?([01T]+)\)?", s)
+    if not m:
+        return False, "trit-format (expected X/Y over digits 0,1,T)"
+    def val(t: str) -> int:
+        v = 0
+        for ch in t:
+            v = v * 4 + (1 if ch == "1" else (-1 if ch == "T" else 0))
+        return v
+    x, y = val(m.group(1)), val(m.group(2))
+    if y == 0:
+        return False, "trit-zero-denominator"
+    if x == 524293 * y:
+        return True, "trit-verified"
+    return False, f"trit-wrong-value ({x}/{y} != 524293)"
+
+
 REGISTRY = {
     "sum_of_squares": verify_sum_of_squares,
     "tangled": verify_tangled,
     "knight_moves_6": verify_knight_moves_6,
+    "what_a_trit": verify_what_a_trit,
 }
 
 
