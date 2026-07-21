@@ -177,3 +177,15 @@
   ②我的清理脚本误删 662/1284 个 run 目录的 transcript,账本完好、指标不受影响,但
   transcript 级审计只覆盖存活的 ~600 个。交付物:runs/FINAL_REPORT.md、
   runs/FINAL_audit_transcripts.txt、runs/checkpoints/final_report.md。
+- 2026-07-22 GPT (Codex) arm launched. cp1 canary (108 runs) ran clean at conc 12
+  (98 terminal: 70 solved / 28 submitted; costs luna $0.068 / terra $0.133 /
+  sol $0.182 mean — under caps, cheaper than Claude counterparts) then hit
+  **OpenAI insufficient_quota** (HTTP 429, hard billing cap) after only $13.80 →
+  10 runs failed $0. Not a rate limit (no retry-after). PAUSED pending Jace
+  adding OpenAI credits / raising the project spend limit; quota probe armed for
+  auto-resume (idempotent — the 10 error keys + gpt_rest will run when quota
+  returns). Ledger backed up to /a/jsbench_backups. Setup verified clean vs the
+  Claude arm (parity audit): same bundles/task-text/k=3/isolation/host-grading/
+  schema/per-tier caps; Codex now also enforces the per-run budget cap by
+  streaming usage (parity with the Claude SDK). Reasoning effort not overridden
+  on either side (recorded).
