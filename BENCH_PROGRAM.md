@@ -128,3 +128,19 @@
   独立提交相同非法 460)。解题率 haiku 19/135、sonnet 59/135、opus 87/135。
   opus 均价 $1.23(2.2× 预测,带外 WARN,同 cp2 原因)。放行 cp4(468 runs,
   预计 ~$330;$780 熔断器兜底,Jace 未答复上调前照常发射,熔断即停队)。
+- 2026-07-22 cp4 发射,$780 熔断如期触发(273/468);Jace 授权"跑完",熔断线
+  780→900→1000,cp4 全 468 runs 完成、0 error,累计 **$988.87**。
+- 2026-07-22 **发现并修复严重隔离漏洞(协议级完整性事件)**:cp4 gate 审 suspect
+  时发现 sonnet 在 some-ones-somewhere 上 `cat /bench/data/raw/.../extracted.json`
+  直接读到 solution_md。根因:runner 用 `..:/bench` 把整个 repo 读写挂进容器,**且
+  判分在容器内执行**(run_agent 调 grade_submission 读 data/graders)——agent 的 Bash
+  因此能读到答案库(data/graders)和官方解(data/raw)。**全量审计 1206 个 run:仅
+  9 个真的读到了答案/解法内容(6 个判对=污染),其余 1197 个从未触碰答案库**(未上锁
+  的门不等于所有访客都进了房间)。修复(harness 级,按既定"修+重跑受影响子集"规则):
+  ①判分移到宿主(run_agent 不再判分/不读 graders,只写 agent 自己的 submitted_answer
+  和 grading:pending-host;runner.grade_on_host 在宿主补齐 correct/method/snapshot,
+  submitted→solved,幂等);②docker-compose 用 tmpfs 把 /bench/data/graders 和
+  /bench/data/raw 屏蔽为空;③verify_isolation.sh 新增断言"答案库容器内不可读",
+  ISOLATION VERIFIED。9 个污染 run 归档到 runs/_mount_leak_archive/ 并在封堵后的
+  harness 下重跑;1197 个干净 run 不受影响。设计文档本就声称"判分完全在 agent
+  世界之外"——此修复使实现与规范一致。**最终报告须如实披露此事件。**
