@@ -21,7 +21,14 @@ harness:
   # Windows-local note: nested `claude` invocations need CLAUDE_CODE_GIT_BASH_PATH set;
   # irrelevant inside the Linux container.
   runner_default: sdk        # sdk | cli
-  effort: default            # do not override effort; record actual value per run
+  # REASONING EFFORT POLICY (both harnesses): never override it. Each agent
+  # runs at its own pinned default — Claude Code omits --effort (Claude default),
+  # Codex leaves model_reasoning_effort=null (GPT default). This is the
+  # least-variance, no-grid choice and the only symmetric one: vendor effort
+  # scales are not calibrated to each other, so forcing a shared label would be
+  # false fairness. Pinned harness versions freeze both defaults. The resolved
+  # value is recorded per run (run.json "reasoning_effort").
+  effort: default
   # OpenAI GPT-5.6 tiers run under the Codex CLI (native-agent product
   # comparison). Pinned to match docker/Dockerfile.codex.
   codex_version: "0.145.0"

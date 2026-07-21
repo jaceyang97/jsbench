@@ -262,6 +262,10 @@ def run_codex(puzzle_id: str, tier: str, sample_idx: int = 1,
         "reasoning_output_tokens": usage_acc.get("reasoning_output_tokens"),
         "cost_usd": cost,
         "cost_method": "token-usage x published pricing (Codex returns no USD)",
+        # Reasoning effort is NOT overridden — Codex sends reasoning_effort=null,
+        # so GPT-5.6's own default applies. Symmetric with the Claude arm, which
+        # never sets --effort (Claude Code default). Recorded for transparency.
+        "reasoning_effort": "default (codex model_reasoning_effort=null)",
         "exit_reason": exit_reason,
         "image_delivered": bool(images),
         "suspect_cheating": suspect,

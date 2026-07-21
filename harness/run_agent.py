@@ -395,6 +395,9 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         "cache_read_tokens": usage.get("cache_read_input_tokens"),
         "cache_creation_tokens": usage.get("cache_creation_input_tokens"),
         "cost_usd": getattr(last, "total_cost_usd", None),   # cumulative session cost
+        # Reasoning effort is NOT overridden (no --effort) -> Claude Code default.
+        # Symmetric with the Codex arm. Recorded for transparency.
+        "reasoning_effort": "default (claude-code, --effort not set)",
         "exit_reason": exit_reason,
         "image_delivered": bool(imgs),
         "suspect_cheating": suspect,
