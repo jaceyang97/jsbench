@@ -33,7 +33,7 @@ concurrency: 12              # 2026-07-21: API (Scale tier, per-model buckets) s
 wall_clock_timeout_s: 2700
 
 budget:
-  hard_cap_usd: 780          # circuit breaker across all runs (Phase 0 + 1)
+  hard_cap_usd: 900          # circuit breaker across all runs (Phase 0 + 1)
   phase0_estimate_usd: 12
   phase1_estimate_usd: 178
 
