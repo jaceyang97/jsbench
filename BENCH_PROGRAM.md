@@ -116,3 +116,15 @@
   已设 10 分钟级余额探针,恢复后自动续跑 cp3(幂等)。**待 Jace**:①充值;
   ②预算决策——按 cp2/cp3 实际单价外推,cp3 余量 ~$180 + cp4 ~$280 → 总额
   ~$790±80,贴着/超过 $780 熔断线,cp4 可能需要加预算或减 k 或接受部分完成。
+- 2026-07-21 Jace 充值 + autoreload on,cp3 续跑完成。cp3 gate **PASS(WARN 已审)**:
+  405/405 终态、0 error、累计 $605.80(78% cap)。判分修正 2 处(都由 judge 兜底
+  发现):①single-cross-2 容差 rel 1e-6 收紧到 1e-9(题目明确要求 10 位有效数字),
+  regrade 翻 2 个 haiku 松散近似值 True→False;②normalize 的等号拆分扩展支持
+  ≈/~("π - 1 ≈ 2.14..."),regrade 翻 rainbow-bagel opus s3 False→True。
+  beside-the-point 3 个 judge 分歧为 judge 算术错误(提交值第 5-6 位小数即错,
+  judge 自相矛盾),维持确定性判否。嫌疑 5 例人工审=全良性(词表/anagram 工具/
+  pypi,github 拉取被代理拦截),已标 reviewed。69 判错样本全真实(报告素材:
+  question-mark 上 opus 双样本停在中间数未做二层解码;square-run 上 haiku+opus
+  独立提交相同非法 460)。解题率 haiku 19/135、sonnet 59/135、opus 87/135。
+  opus 均价 $1.23(2.2× 预测,带外 WARN,同 cp2 原因)。放行 cp4(468 runs,
+  预计 ~$330;$780 熔断器兜底,Jace 未答复上调前照常发射,熔断即停队)。

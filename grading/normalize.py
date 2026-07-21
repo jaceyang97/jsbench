@@ -120,8 +120,9 @@ def normalize_and_compare(submitted, expected, grader: dict) -> tuple[bool, str]
     answer_type = grader.get("answer_type", "string")
 
     # Models often submit "exact_form = decimal" (e.g. "(229-60*sqrt(5))/192
-    # = 0.4939370904"). Accept if ANY '='-separated side matches.
-    sub_str = str(submitted)
+    # = 0.4939370904" or "π - 1 ≈ 2.1415926..."). Accept if ANY side of an
+    # equality/approximation separator matches.
+    sub_str = str(submitted).replace("≈", "=").replace("~", "=")
     if "=" in sub_str and answer_type != "multi":
         for side in sub_str.split("="):
             side = side.strip()
