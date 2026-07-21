@@ -144,3 +144,18 @@
   ISOLATION VERIFIED。9 个污染 run 归档到 runs/_mount_leak_archive/ 并在封堵后的
   harness 下重跑;1197 个干净 run 不受影响。设计文档本就声称"判分完全在 agent
   世界之外"——此修复使实现与规范一致。**最终报告须如实披露此事件。**
+- 2026-07-22 泄漏修复第一版不彻底 + 一次操作事故(如实记录):
+  ①**第一版窄屏蔽不够**:只 tmpfs 屏蔽 data/graders + data/raw,重跑时 sonnet 仍通过
+  `/bench/runs/_mount_leak_archive/.../transcript.jsonl`(我归档的旧污染 transcript
+  本身含 solution)读到答案——**整个挂载的 repo(runs/ 全部历史 transcript、run.json
+  的 grader_snapshot、data/review_sheet.md)都是泄漏面**。彻底修复:repo 只读挂载;
+  /bench/data 与 /bench/runs 整体 tmpfs 清空;仅把干净的 data/puzzles 只读挂回;本 run
+  输出绑到 /bench 之外的 /out(JSB_RUN_DIR),宿主读回并判分;verify_isolation 断言所有
+  答案面消失。已用曾被泄漏"解出"的题验证:agent 现在诚实判错,transcript 零答案引用。
+  ②**操作事故**:清理落单 run 目录的脚本在 Windows 反斜杠路径上 basename 返回空串,
+  无差别删了 **662/1284 个 run 目录**(transcript+workdir),因某 workdir 内 venv 符号
+  链接崩溃才停。**账本 runs.jsonl 完好(1258 条+多份备份)——analysis.report 只读账本,
+  pass@k/成本/解率/记忆污染完全不受影响**;丢的是 662 个 run 的 transcript 级审计痕迹
+  (audit_transcripts 只能覆盖存活 622 个)。这是我的错误,已上报 Jace。
+  ③受影响 3 题(tile-and-trouble-2、poetry-in-motion、some-ones-somewhere)26 条账本
+  记录清出,27 样本在封堵后 harness 全部重跑。
