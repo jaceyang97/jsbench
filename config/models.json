@@ -1,6 +1,6 @@
 {
   "_verified": {
-    "date": "2026-07-19",
+    "date": "2026-07-22",
     "sources": [
       "https://platform.claude.com/docs/en/about-claude/models/overview.md",
       "claude-api skill (cached 2026-06-24) cross-checked against live docs"
@@ -12,7 +12,9 @@
       "reliable_cutoff = date through which knowledge is most extensive/reliable; training_cutoff = broader training data range. Time-partition analysis uses reliable_cutoff (conservative: post-cutoff only if puzzle month > training_cutoff for ALL models).",
       "fable-5: thinking always on (cannot disable, 400); safety classifier may silently hand off to opus-4-8 -> detect via per-model usage in result (model_handoff_detected).",
       "haiku-4-5: only model still using extended thinking w/ budget_tokens; omitting thinking param = thinking off (useful for probe).",
-      "2026-07-22: added OpenAI GPT-5.6 tiers under Codex harness (native-agent product comparison A). Pricing from OpenAI public pricing page (sol 5/30, terra 2.5/15, luna 1/6 per Mtok in/out). Per-tier budget/turn caps mirror the Claude counterpart (luna=haiku, terra=sonnet, sol=opus). reliable_cutoff/training_cutoff 2025-09 is a PLACEHOLDER pending confirmation of GPT-5.6's true knowledge cutoff — affects only the pre/post-cutoff split."
+      "2026-07-22: GPT-5.6 sol/terra/luna knowledge cutoff = 2026-02-16 (per Jace, all three share it). Recorded for completeness; barely affects the pre/post-cutoff split since it is later than every Claude cutoff.",
+      "2026-07-22: Claude knowledge cutoffs RE-CONFIRMED against the official models overview (platform.claude.com/docs/en/about-claude/models/overview): Haiku 4.5 reliable=Feb 2025 / training=Jul 2025; Sonnet 5, Opus 4.8, Fable 5 reliable=training=Jan 2026. Matches config.",
+      "2026-07-22: effort defaults (per same doc) — Opus 4.8 and Sonnet 5 default to effort=high on Claude Code; Haiku 4.5 uses extended thinking (no effort param). We DO NOT override effort on either harness (Claude default vs Codex reasoning_effort=null -> GPT default); recorded per run."
     ]
   },
   "models": [
@@ -34,7 +36,8 @@
       "max_turns": 30,
       "max_attempts": 1,
       "samples_k": 3,
-      "harness": "claude-code"
+      "harness": "claude-code",
+      "default_effort": "extended-thinking (default)"
     },
     {
       "tier": "sonnet",
@@ -58,7 +61,8 @@
       "max_turns": 40,
       "max_attempts": 1,
       "samples_k": 3,
-      "harness": "claude-code"
+      "harness": "claude-code",
+      "default_effort": "high (Claude Code default)"
     },
     {
       "tier": "opus",
@@ -78,7 +82,8 @@
       "max_turns": 40,
       "max_attempts": 1,
       "samples_k": 3,
-      "harness": "claude-code"
+      "harness": "claude-code",
+      "default_effort": "high (Claude Code default)"
     },
     {
       "tier": "fable",
@@ -99,7 +104,8 @@
       "handoff_fallback_model": "claude-opus-4-8",
       "max_attempts": 1,
       "samples_k": 3,
-      "harness": "claude-code"
+      "harness": "claude-code",
+      "default_effort": "adaptive (always on)"
     },
     {
       "tier": "gpt-luna",
@@ -107,8 +113,8 @@
       "display_name": "GPT-5.6 Luna",
       "harness": "codex",
       "counterpart_tier": "haiku",
-      "reliable_cutoff": "2025-09",
-      "training_cutoff": "2025-09",
+      "reliable_cutoff": "2026-02",
+      "training_cutoff": "2026-02",
       "context_window": 400000,
       "max_output": 128000,
       "pricing_per_mtok": {
@@ -119,7 +125,9 @@
       "max_budget_usd": 0.75,
       "max_turns": 30,
       "max_attempts": 1,
-      "samples_k": 3
+      "samples_k": 3,
+      "knowledge_cutoff_date": "2026-02-16",
+      "default_effort": "model default (codex reasoning_effort=null)"
     },
     {
       "tier": "gpt-terra",
@@ -127,8 +135,8 @@
       "display_name": "GPT-5.6 Terra",
       "harness": "codex",
       "counterpart_tier": "sonnet",
-      "reliable_cutoff": "2025-09",
-      "training_cutoff": "2025-09",
+      "reliable_cutoff": "2026-02",
+      "training_cutoff": "2026-02",
       "context_window": 400000,
       "max_output": 128000,
       "pricing_per_mtok": {
@@ -139,7 +147,9 @@
       "max_budget_usd": 1.5,
       "max_turns": 40,
       "max_attempts": 1,
-      "samples_k": 3
+      "samples_k": 3,
+      "knowledge_cutoff_date": "2026-02-16",
+      "default_effort": "model default (codex reasoning_effort=null)"
     },
     {
       "tier": "gpt-sol",
@@ -147,8 +157,8 @@
       "display_name": "GPT-5.6 Sol",
       "harness": "codex",
       "counterpart_tier": "opus",
-      "reliable_cutoff": "2025-09",
-      "training_cutoff": "2025-09",
+      "reliable_cutoff": "2026-02",
+      "training_cutoff": "2026-02",
       "context_window": 400000,
       "max_output": 128000,
       "pricing_per_mtok": {
@@ -159,7 +169,9 @@
       "max_budget_usd": 3.0,
       "max_turns": 40,
       "max_attempts": 1,
-      "samples_k": 3
+      "samples_k": 3,
+      "knowledge_cutoff_date": "2026-02-16",
+      "default_effort": "model default (codex reasoning_effort=null)"
     }
   ]
 }
