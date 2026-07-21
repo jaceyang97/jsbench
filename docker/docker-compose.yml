@@ -30,6 +30,16 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     volumes:
       - ..:/bench
+    # Mask the answer stores with empty in-memory filesystems so the agent's
+    # Bash tool cannot read them even though the repo is bind-mounted. Grading
+    # runs on the HOST (orchestrate.runner.grade_on_host), so the container
+    # never needs these. Defense in depth for the "agent reads /bench/data/
+    # graders" leak class. runs/ is left visible (the agent needs its own
+    # workdir) but completed run.json files no longer carry grader_snapshot at
+    # container-write time — that field is filled host-side.
+    tmpfs:
+      - /bench/data/graders
+      - /bench/data/raw
     working_dir: /bench
     networks: [bench_internal]
     depends_on: [proxy]

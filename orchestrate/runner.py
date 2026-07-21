@@ -28,8 +28,52 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from harness.run_agent import CONFIG, MODELS, run_agent  # noqa: E402
+from grading.grade import grade_submission  # noqa: E402  (HOST-side only)
 
 RUNS_LOG = ROOT / CONFIG["paths"]["runs_log"]
+GRADERS_DIR = ROOT / "data" / "graders"
+
+
+def grade_on_host(rec: dict) -> dict:
+    """Grade a finished run on the HOST (agents never touch data/graders).
+
+    The container writes run.json with grading='pending-host', correct=None,
+    and the raw submitted_answer read from its own output/answer.json. We grade
+    from that workdir, fill the verdict fields, finalize exit_reason
+    (submitted -> solved), and rewrite runs/<id>/run.json so it is the single
+    source of truth. Idempotent: already-graded records pass through."""
+    if rec.get("grading") != "pending-host":
+        return rec
+    run_id = rec.get("run_id")
+    workdir = ROOT / CONFIG["paths"]["runs"] / run_id / "workdir"
+    try:
+        g = grade_submission(rec["puzzle_id"], workdir)
+    except Exception as exc:
+        rec["grading"] = f"host-error: {exc!r}"
+        return rec
+    correct = bool(g["correct"])
+    rec["correct"] = correct
+    rec["submitted_answer"] = g["submitted_answer"]
+    rec["grade_method"] = g["grade_method"]
+    rec["grader_needs_review"] = g["grader_needs_review"]
+    rec["solved_on_attempt"] = 1 if correct else None
+    rec["first_try_correct"] = correct
+    for a in rec.get("attempts", []):
+        a["correct"] = correct
+        a["grade_method"] = g["grade_method"]
+    snap = json.loads((GRADERS_DIR / f"{rec['puzzle_id']}.json")
+                      .read_text(encoding="utf-8"))
+    rec["grader_snapshot"] = {k: snap[k] for k in
+                              ("answer", "answer_type", "tolerance", "aliases",
+                               "verifier", "grading_mode") if k in snap}
+    if correct and rec.get("exit_reason") == "submitted":
+        rec["exit_reason"] = "solved"
+    rec["grading"] = "host-graded"
+    rj = ROOT / CONFIG["paths"]["runs"] / run_id / "run.json"
+    if rj.exists():
+        rj.write_text(json.dumps(rec, ensure_ascii=False, indent=2),
+                      encoding="utf-8")
+    return rec
 
 # Phase 0 demo set (travel-agent excluded: approximate score-type answer)
 PHASE0_PUZZLES = [
@@ -136,6 +180,9 @@ async def run_all(queue: list[dict], containerized: bool = True) -> None:
                        "model_requested": MODELS[item["tier"]]["model_id"],
                        "sample_idx": item["sample_idx"],
                        "exit_reason": "error", "error": repr(exc), "arm": "agentic"}
+            # HOST-side grading: the container returns an ungraded record; the
+            # orchestrator (which alone may read data/graders) finalizes it.
+            rec = grade_on_host(rec)
             RUNS_LOG.parent.mkdir(exist_ok=True)
             with RUNS_LOG.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")

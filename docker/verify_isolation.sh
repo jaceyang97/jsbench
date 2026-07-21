@@ -54,5 +54,18 @@ if pip3 install --break-system-packages --quiet --no-cache-dir tabulate 2>/dev/n
   echo "OK: pip install succeeded"
 else echo "FAIL: pip install failed"; fail=1; fi
 
+echo "== answer stores must be masked (no in-container grading leak) =="
+# data/graders holds answers; data/raw holds solution_md. Both are tmpfs-masked
+# to empty. A non-empty listing means the agent could read the answer.
+for d in /bench/data/graders /bench/data/raw; do
+  n=$(ls -A "$d" 2>/dev/null | wc -l)
+  if [ "$n" = "0" ]; then echo "OK mask : $d is empty"; else
+    echo "FAIL(leak): $d exposes $n entries"; fail=1; fi
+done
+# spot-check: a known grader answer must NOT be catt-able
+if cat /bench/data/graders/2014-01-sum-of-squares.json 2>/dev/null | grep -q answer; then
+  echo "FAIL(leak): grader JSON is readable inside the container"; fail=1
+else echo "OK mask : grader JSON unreadable"; fi
+
 if [ $fail -eq 0 ]; then echo "ISOLATION VERIFIED"; else echo "ISOLATION FAILED"; fi
 exit $fail

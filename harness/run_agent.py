@@ -36,7 +36,10 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from grading.grade import grade_submission  # noqa: E402
+# NOTE: grading is intentionally NOT imported here. The agent container must
+# never have access to data/graders (an in-container grade would expose the
+# answer to the agent's own Bash tool). Grading happens on the HOST — see
+# orchestrate/runner.py grade_on_host().
 from harness.prompts import (  # noqa: E402
     SYSTEM_APPEND, SYSTEM_APPEND_SHA256, TASK_RULES_SHA256, render_task,
 )
@@ -122,6 +125,19 @@ def snapshot_answer(workdir: Path) -> str | None:
         return None
 
 
+def read_submitted_answer(workdir: Path) -> str | None:
+    """The agent's OWN submission (output/answer.json) — never the grader.
+    Distinct from a null 'answer' key (malformed) vs a missing file."""
+    p = workdir / "output" / "answer.json"
+    if not p.exists():
+        return None
+    try:
+        val = json.loads(p.read_text(encoding="utf-8")).get("answer")
+        return None if val is None else str(val)
+    except Exception:
+        return None
+
+
 def image_blocks(workdir: Path) -> list[dict]:
     blocks = []
     img_dir = workdir / "images"
@@ -148,7 +164,7 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
     ends the session early, and the agent is never told it was right."""
     from claude_agent_sdk import ClaudeAgentOptions, ClaudeSDKClient
     from claude_agent_sdk.types import ResultMessage
-    from harness.prompts import render_retry, RETRY_FEEDBACK_SHA256
+    from harness.prompts import render_retry, RETRY_FEEDBACK_SHA256  # noqa: F401
 
     mcfg = MODELS[tier]
     run_id = run_id or f"{puzzle_id}_{tier}_s{sample_idx}_{uuid.uuid4().hex[:8]}"
@@ -249,7 +265,6 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
     attempts: list[dict] = []          # per-attempt record
     results: list = []                 # ResultMessage per attempt turn
     tool_calls = 0
-    solved_on_attempt: int | None = None
     exit_reason = "error"
     timed_out = False
     last_result = None
@@ -281,24 +296,31 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
                             turn_result = msg
                     results.append(turn_result)
 
-                    # grade this attempt off-band (agent never sees the verdict)
-                    grade = grade_submission(puzzle_id, workdir)
+                    # Grading is NOT done here: data/graders must never be
+                    # mounted into the agent container (an in-container grade
+                    # exposes the answer to the agent's own Bash tool). The
+                    # HOST grades post-hoc from workdir/output/answer.json.
+                    # We only read back the agent's OWN submission (safe).
+                    submitted = read_submitted_answer(workdir)
                     attempts.append({
                         "attempt": attempt,
-                        "submitted_answer": grade["submitted_answer"],
-                        "correct": grade["correct"],
-                        "grade_status": grade["grade_status"],
-                        "grade_method": grade["grade_method"],
+                        "submitted_answer": submitted,
+                        "correct": None,           # graded on host
+                        "grade_status": "ok" if submitted is not None else "missing",
+                        "grade_method": None,
                         "turn_subtype": getattr(turn_result, "subtype", None),
                         "turn_cost_usd": getattr(turn_result, "total_cost_usd", None),
                         "cumulative_num_turns": getattr(turn_result, "num_turns", None),
                     })
-                    if grade["correct"]:
-                        solved_on_attempt = attempt
-                        break
-                    # if the turn itself hit a hard cap, stop retrying
+                    # Oracle feedback is OFF (max_attempts=1); with in-container
+                    # grading removed we can no longer early-stop on correctness.
+                    # A single-attempt run ends here; the experimental multi-
+                    # attempt mode (max_attempts>1) is intentionally unsupported
+                    # while grading lives on the host.
                     st = getattr(turn_result, "subtype", "") or ""
                     if turn_result is None or "max_turns" in st or "budget" in st:
+                        break
+                    if max_attempts == 1:
                         break
     except TimeoutError:
         timed_out = True
@@ -310,25 +332,21 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         stderr_fh.close()
 
     wall_time_s = round(time.monotonic() - t0, 1)
-    final_grade = grade_submission(puzzle_id, workdir)
-    correct = solved_on_attempt is not None
+    submitted_answer = read_submitted_answer(workdir)
     attempts_used = len(attempts)
 
-    # --- exit reason
+    # --- provisional exit reason (correctness-independent; the HOST finalizes
+    #     "submitted" -> "solved" after off-band grading). Never references the
+    #     grader — the container has no access to answers.
     last = last_result
     last_subtype = getattr(last, "subtype", None)
-    if correct:
-        exit_reason = "solved"
-    elif timed_out:
+    if timed_out:
         exit_reason = "timeout"
     elif last is None:
         exit_reason = "error"
     elif attempts_used >= max_attempts:
-        # single-attempt mode (the literature-standard default): a graded-wrong
-        # submission is just "submitted"; only multi-attempt sessions report
-        # attempts_exhausted
         exit_reason = ("submitted" if max_attempts == 1 and
-                       attempts and attempts[-1]["grade_status"] == "ok"
+                       submitted_answer is not None
                        else "attempts_exhausted")
     elif last_subtype == "error_max_turns":
         exit_reason = "max_turns"
@@ -359,9 +377,10 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         "sample_idx": sample_idx,
         "max_attempts": max_attempts,
         "attempts_used": attempts_used,
-        "solved_on_attempt": solved_on_attempt,     # 1..N or None
-        "correct": correct,                          # solved within N attempts
-        "first_try_correct": bool(attempts and attempts[0]["correct"]),
+        "solved_on_attempt": None,                   # host fills after grading
+        "correct": None,                             # graded on host (off-band)
+        "grading": "pending-host",                   # runner grades from workdir
+        "first_try_correct": None,                   # host fills
         "attempts": attempts,                        # full per-attempt trail
         "start_ts": start_ts, "wall_time_s": wall_time_s,
         "num_turns": sum((a.get("cumulative_num_turns") or 0) for a in attempts),
@@ -376,16 +395,10 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
         "suspect_cheating": suspect,
         "suspect_details": suspect_details,
         "pip_installs": pip_installs,
-        "submitted_answer": final_grade["submitted_answer"],
-        "grade_method": final_grade["grade_method"],
-        "grader_needs_review": final_grade["grader_needs_review"],
-        "grader_snapshot": {
-            k: v for k, v in json.loads(
-                (ROOT / "data" / "graders" / f"{puzzle_id}.json")
-                .read_text(encoding="utf-8")).items()
-            if k in ("answer", "answer_type", "tolerance", "aliases", "verifier",
-                     "grading_mode")
-        },
+        "submitted_answer": submitted_answer,
+        "grade_method": None,            # host fills
+        "grader_needs_review": None,     # host fills
+        "grader_snapshot": None,         # host fills (container has no graders)
         "transcript_path": str(transcript_path.relative_to(ROOT)),
     }
     (run_dir / "run.json").write_text(
