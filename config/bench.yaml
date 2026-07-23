@@ -33,10 +33,12 @@ harness:
   # comparison). Pinned to match docker/Dockerfile.codex.
   codex_version: "0.145.0"
 
-concurrency: 12              # 2026-07-21: API (Scale tier, per-model buckets) supports 150+;
+concurrency: 10              # 2026-07-21: API (Scale tier, per-model buckets) supports 150+;
                              # VM resources support ~24; but wsl-bootstrap SIGBUS-crashed minutes
                              # after a 24-container start burst (and once at conc 3 after 6h) —
-                             # 12 stays clear of the burst-triggered WSL instability
+                             # 12 stays clear of the burst-triggered WSL instability.
+                             # 2026-07-23: 12 -> 10 to lower host memory pressure during the
+                             # GPT arm (with the 48GB WSL memory cap in .wslconfig).
 # 45 min hard kill per SESSION (covers all N feedback-guided attempts).
 # Cost is independently capped by max_budget_usd; this is the safety net so a
 # multi-attempt session on a hard puzzle isn't truncated mid-attempt.
@@ -65,7 +67,7 @@ scrape:
   # -> {"leaders": [names]}. Available for puzzles from 2015-11 onward.
   leaderboard_min_date: "2015-11"
   delay_s: 1.5               # polite scraping interval
-  user_agent: "jsbench-research/0.1 (LLM benchmark data collection; contact: jaceyang8@gmail.com)"
+  user_agent: "jsbench-research/0.1 (LLM benchmark data collection; contact: github.com/jaceyang97/jsbench)"
 
 network_isolation:
   # Phase 0 may run on host; Phase 1 REQUIRES container + egress allowlist.

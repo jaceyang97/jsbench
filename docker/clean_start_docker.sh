@@ -9,7 +9,8 @@
 # directly. Safe to run repeatedly.
 set -u
 TS=$(date +%s)
-LOCAL="/c/Users/Jace/AppData/Local"
+# Windows per-user AppData\Local as a Git Bash path (e.g. /c/Users/<user>/AppData/Local)
+LOCAL="$(cygpath -u "${LOCALAPPDATA:?LOCALAPPDATA not set — run from Git Bash on Windows}")"
 
 # 1) fully stop anything running (graceful first, then hard)
 export PATH="/c/Program Files/Docker/Docker/resources/bin:$PATH"

@@ -1,289 +1,411 @@
-# jsbench — 完整测试配置图(终版 v4)
+# jsbench — full benchmark design record (final, v4)
 
-生成:2026-07-19 · 仓库:github.com/jaceyang97/jsbench(代码公开;data/runs 本地)
-v3:回归文献标准 —— k 次独立采样、无 oracle 反馈、Chen 无偏 pass@k(v2 的反馈重试
-经评审否决,保留为默认关闭的实验 flag)。
-v4:**全量 144 题 × 3 模型(去 Fable)× k=3,checkpoint 护栏分批推进**(§12)。
+Generated: 2026-07-19 · Repository: github.com/jaceyang97/jsbench (code
+public; data/ and runs/ local).
+
+- v3: return to the literature standard — k independent samples, no oracle
+  feedback, Chen unbiased pass@k. (The v2 feedback-retry design was rejected
+  on review; it remains as an experimental flag, off by default.)
+- v4: **full set of 144 puzzles × 3 models (no Fable) × k=3, with checkpoint
+  guardrails between batches** (§11-bis).
+
+> **Status of this document.** This is the frozen design record for the
+> Claude arm, as approved on 2026-07-19. Values that changed during
+> operations (the puzzle count 144→134, the concurrency, the circuit-breaker
+> level, the wall-clock cap) are recorded, with dates, in the
+> [`BENCH_PROGRAM.md`](BENCH_PROGRAM.md) change log. The GPT (Codex) arm was
+> added on 2026-07-22 as a mirror of this design; see the addendum at the end
+> of this file. The original document was partly in Chinese; it was rewritten
+> in controlled English on 2026-07-24 with no number changed.
 
 ---
 
-## 1. 评测目标与主指标(v3:文献标准的独立采样 pass@k)
+## 1. Goal and primary metric (v3: independent-sample pass@k)
 
-**问题**:Anthropic 模型(Haiku 4.5 / Sonnet 5 / Opus 4.8;**Fable 5 不参赛**,
-理由见 §10)在 Claude Code harness 下解 Jane Street 月度谜题的能力。
+**Question**: how well do Anthropic models (Haiku 4.5 / Sonnet 5 / Opus 4.8;
+**Fable 5 does not compete**, reasons in §10) solve Jane Street monthly
+puzzles in the Claude Code harness?
 
-**主指标:pass@k,k 次完全独立采样**(HumanEval / Chen et al. 2021 无偏估计器
-`1 − C(n−c,k)/C(n,k)`,逐题计算后对题平均)。每次尝试 = 全新容器 + 全新会话,
-**无任何 oracle 反馈** —— agent 永远不知道自己对错,判分完全在 agent 世界之外。
-"多次尝试补一次做不对"由估计器统计学地处理,而非由反馈循环行为化地处理。
+**Primary metric: pass@k over k fully independent samples** (the
+HumanEval / Chen et al. 2021 unbiased estimator `1 − C(n−c,k)/C(n,k)`,
+computed per puzzle, then averaged across puzzles). Each attempt = a new
+container + a new session, **with no oracle feedback** — the agent never
+learns if it was correct; grading stays fully outside the agent world. The
+estimator handles "more tries help" statistically, not behaviorally.
 
-**为何不用"告诉模型错了让它重试"**(v2 方案,已否决):oracle 反馈把测量对象从
-"解题能力"变成"对判分器的自适应搜索";小答案空间的题(单字母、二选一)可被垫底
-命中;成熟基准(HumanEval、FrontierMath、SWE-bench、ARC-AGI)无一采用 oracle
-反馈 —— ARC 的"每题 2 次提交"也是同时提交、之间无反馈。**"迭代改进"的合法形态**
-是 FrontierMath 式的 run 内自我验证(agent 用代码检查自己的答案再提交),
-TASK_RULES 已明确要求。
+**Why not "tell the model it was wrong and let it retry"** (the v2 design,
+rejected): oracle feedback changes the measured object from "solving ability"
+to "adaptive search against the grader". Puzzles with small answer spaces
+(one letter, a binary choice) can be hit by enumeration. No mature benchmark
+(HumanEval, FrontierMath, SWE-bench, ARC-AGI) uses oracle feedback — ARC's
+"2 submissions per task" are simultaneous, with no feedback between them.
+**The legitimate form of "iterative improvement"** is FrontierMath-style
+in-run self-verification (the agent checks its own answer with code before
+submission); TASK_RULES asks for exactly that.
 
-| 模型 | model_id | k(独立采样) | 单次预算上限 | max_turns | reliable cutoff |
+| Model | model_id | k (independent) | Per-run budget cap | max_turns | Reliable cutoff |
 |---|---|---|---|---|---|
 | Haiku 4.5 | claude-haiku-4-5-20251001 | **3** | $0.75 | 30 | 2025-02 |
 | Sonnet 5 | claude-sonnet-5 | **3** | $1.50 | 40 | 2026-01 |
 | Opus 4.8 | claude-opus-4-8 | **3** | $3.00 | 40 | 2026-01 |
-| ~~Fable 5~~ | ~~claude-fable-5~~ | 不参赛 | — | — | 成本+记忆污染,见 §10 |
+| ~~Fable 5~~ | ~~claude-fable-5~~ | not competing | — | — | cost + memorization, see §10 |
 
-k 统一 = 3:跨模型 pass@1/pass@2/pass@3 全部可比。
+k = 3 for all models: pass@1 / pass@2 / pass@3 stay comparable across models.
 
-**guessproof 原则**(FrontierMath):答案空间小的题(如单字母、人名二选一)标
-`guessable: true`,主表之外单列;大数值答案(13,682,882 类)天然防猜。
+**Guessproof principle** (FrontierMath): puzzles with small answer spaces
+(one letter, a two-name choice) get `guessable: true` and are listed outside
+the main table. Large numeric answers (the 13,682,882 class) resist guessing
+by nature.
 
-报告呈现:pass@k(k=3)± SEM 为主 + pass@1 + 配对差(同题配对 95% CI)+
-clustered SE(系列题成簇)+ pre/post-cutoff 分层 + 记忆污染剔除敏感性 +
-guessable 单列。辅助:成本、turns、工具调用、pip 安装行为。
+Report presentation: pass@k (k=3) ± SEM as primary + pass@1 + paired
+differences (same-puzzle pairs, 95% CI) + clustered SE (puzzle series form
+clusters) + pre/post-cutoff strata + memorization-excluded sensitivity +
+guessable listed separately. Secondary: cost, turns, tool calls, pip-install
+behavior.
 
-*(v2 的同会话反馈重试保留为 `max_attempts>1` 的实验 flag,默认 1=关闭;
-若未来想测"反馈增益"作为附加研究臂,改配置即可,但不进主指标。)*
-
----
-
-## 2. 题库与 Phase 1 题集
-
-- 全档案 **148 题**已抓取(2014-01 至 2026-06),原始 HTML/图片/leaderboard JSON
-  快照存 `data/raw/`(带时间戳与 SHA-256,离线可复现)。
-- **正式题集 = 全部可用题 144 道**(148 − 4 道无固定答案的开放题,标
-  `exclude_
+*(The v2 same-session feedback retry remains as the `max_attempts>1`
+experimental flag, default 1 = off. To measure "feedback gain" as an extra
+research arm later, change the config; it never enters the primary metric.)*
 
 ---
 
-## 3. 运行环境(每 run 一个一次性容器)
+## 2. Puzzle library and the formal set
+
+- The full archive of **148 puzzles** is scraped (2014-01 through 2026-06).
+  Raw HTML / images / leaderboard JSON snapshots live in `data/raw/` with
+  timestamps and SHA-256 hashes; reproducible offline.
+- **Formal set = all 144 usable puzzles** (148 − 4 open puzzles without a
+  fixed answer, marked `exclude_recommended`). (During grader review, 9 more
+  open-competition puzzles were excluded; final set 134 — see the
+  BENCH_PROGRAM change log, 2026-07-19.)
+
+---
+
+## 3. Runtime environment (one disposable container per run)
 
 ```
-宿主(Windows) ── orchestrator(asyncio,并发 3)
-   │  每个 run: docker compose run --rm agent …   ← 全新容器,用后即毁,绝不复用
+Host (Windows) ── orchestrator (asyncio, concurrency 3)
+   │  per run: docker compose run --rm agent …   ← new container, destroyed after use, never reused
    ▼
-容器(node:20-slim,以 node 用户运行)
-   ├─ Claude Code CLI 2.1.215(SDK 0.2.123 wheel 捆绑,版本双锁定)
-   ├─ Python3 + 预装:numpy scipy sympy pandas z3-solver ortools networkx pillow matplotlib
-   ├─ agent 可自装:pip install 任意 PyPI 包(哲学:给坚实基座,环境由 agent 自行演化)
-   └─ 出网:仅经 tinyproxy sidecar(deny-by-default 白名单)
+Container (node:20-slim, runs as the node user)
+   ├─ Claude Code CLI 2.1.215 (bundled by the SDK 0.2.123 wheel; version double-pinned)
+   ├─ Python3 + preinstalled: numpy scipy sympy pandas z3-solver ortools networkx pillow matplotlib
+   ├─ the agent can install more: pip install any PyPI package
+   │  (philosophy: give a solid base; the agent evolves its own environment)
+   └─ egress: only through the tinyproxy sidecar
 ```
 
-**网络:黑名单模型(v2,default-allow + 经验封锁)** —— 按 Jace addendum item 7:
-agent 可查数学/编程参考资料,只封锁"解答可能存在的地方"。容器网络为 internal(无外网
-网关),tinyproxy 是唯一出口,每条请求都过滤器且**全量记录日志**。
+**Network: blocklist model (v2, default-allow + empirical blocks)** — per the
+operator's addendum item 7: the agent may consult math/programming
+references; block only "the places where solutions can exist". The container
+network is internal (no external gateway); tinyproxy is the only exit; each
+request passes the filter and **each request is logged in full**.
 
-- **放行**(实测 200):维基百科、OEIS、Wolfram MathWorld、Python 文档、arXiv、
-  StackOverflow、PyPI、Anthropic API —— 一切未列入黑名单的站点。
-- **封锁**(实测 000,`docker/proxy/filter`):
-  - 源站:janestreet.com
-  - 代码托管(解题仓库 gowen100/miguelbper/iamzr…):github.com、*.github.io、
-    githubusercontent、gist、gitlab、bitbucket、codeberg、sourceforge
-  - 搜索引擎(发现层,防止用题名搜到解答页):google/bing/duckduckgo/yandex/
-    baidu/brave/ecosia/startpage/qwant/kagi/you.com/perplexity/phind
-  - 视频/社交/博客写作:youtube、reddit、twitter/x、medium、substack、quora
-  - Jane Street 解答专区:puzzling.stackexchange.com
-  - 其他 LLM 端点(防外包求解):openai、googleapis、deepseek、mistral
-- **WebSearch / WebFetch 工具保持禁用**:这两个是 Anthropic 服务端工具,**绕过容器
-  代理**(我的黑名单管不到),所以禁用它们才能让网络层封锁真正有效。agent 通过 Bash
-  (curl/python)访问网络 —— 这条路径受代理黑名单治理且全程留痕。
-- 直连(绕过代理)无路由。验证脚本 `docker/verify_isolation.sh`:最近一次
-  放行 8/8、封锁 12/12、直连拦截、pip 成功,全过。
+- **Allowed** (tested, HTTP 200): Wikipedia, OEIS, Wolfram MathWorld, Python
+  docs, arXiv, StackOverflow, PyPI, the Anthropic API — everything not on the
+  blocklist.
+- **Blocked** (tested, HTTP 000; `docker/proxy/filter`):
+  - The source site: janestreet.com
+  - Code hosting (known solution repositories — gowen100 / miguelbper /
+    iamzr…): github.com, *.github.io, githubusercontent, gist, gitlab,
+    bitbucket, codeberg, sourceforge
+  - Search engines (the discovery layer; stops a title search from finding a
+    solution page): google / bing / duckduckgo / yandex / baidu / brave /
+    ecosia / startpage / qwant / kagi / you.com / perplexity / phind
+  - Video / social / blog platforms: youtube, reddit, twitter/x, medium,
+    substack, quora
+  - The Jane Street solution area: puzzling.stackexchange.com
+  - Other LLM endpoints (stops outsourced solving): openai, googleapis,
+    deepseek, mistral
+- **WebSearch / WebFetch tools stay disabled**: these are Anthropic
+  server-side tools and **bypass the container proxy** (the blocklist cannot
+  see them). With the tools disabled, the network block is real. The agent
+  reaches the network through Bash (curl / python) — that path obeys the
+  proxy blocklist and leaves a full trace.
+- Direct connections (around the proxy) have no route. Verification script
+  `docker/verify_isolation.sh`: last run — allow 8/8, block 12/12, direct
+  egress blocked, pip OK. All green.
 
-**残余风险(如实)**:未列入黑名单的某个站点若恰好托管了某题解答(个人博客等),
-agent 理论上可达;但无搜索引擎则难以"发现"该 URL。**Jace 明确接受此权衡**
-("do your best, I have logs post hoc"),transcript 全量记录每个 Bash 网络访问供事后审计。
+**Residual risk (stated honestly)**: a site not on the blocklist could host a
+solution to some puzzle (a personal blog, for example); the agent can reach
+it in theory. Without search engines, discovery of such a URL is hard. **The
+operator accepts this trade-off** ("do your best, I have logs post hoc"); the
+transcript records every Bash network access for post-hoc audit.
 
 ---
 
-## 4. 单次采样流程(v3:独立会话,无反馈)
+## 4. Single-sample flow (v3: independent session, no feedback)
 
 ```
-1. orchestrator 生成 run_id,启动一次性容器(用后 --rm 销毁)
-2. harness 把 data/puzzles/<id>/ 复制进独立 workdir,建空 output/
-3. 首条消息 [图片 base64 blocks] + [题面 + TASK_RULES]
-   → 图片走模型原生 vision 通道;agent loop(bare 模式)自主工作,
-   期间可用代码自我验证(FrontierMath 式),写 output/answer.json 后停止
-   工具:Bash, Read, Write, Edit, Glob, Grep;禁用 WebSearch/WebFetch
-   上限:max_turns(SDK)+ max_budget_usd + 45min wall-clock
-4. 会话结束,容器销毁;场外判分(agent 永远不知道结果);
-   同一 (题,模型) 的 k 次采样彼此完全隔离 —— 零信息流动
+1. The orchestrator makes a run_id and starts a disposable container (--rm).
+2. The harness copies data/puzzles/<id>/ into a private workdir and makes an empty output/.
+3. First message: [image base64 blocks] + [problem text + TASK_RULES]
+   → images go through the model's native vision channel; the agent loop
+   (bare mode) works autonomously; it can self-verify with code
+   (FrontierMath style); it writes output/answer.json and stops.
+   Tools: Bash, Read, Write, Edit, Glob, Grep; WebSearch/WebFetch disabled.
+   Caps: max_turns (SDK) + max_budget_usd + 45min wall clock.
+4. The session ends; the container is destroyed; grading happens off-stage
+   (the agent never learns the result). The k samples for one
+   (puzzle, model) pair are fully isolated from each other — zero
+   information flow.
 ```
 
-Prompt 全文 `harness/prompts.py`(SYSTEM_APPEND + TASK_RULES),SHA-256 每 run
-记录 —— 漂移可检测。
+The full prompt text is in `harness/prompts.py` (SYSTEM_APPEND +
+TASK_RULES). Each run records the SHA-256 of both — drift is detectable.
 
 ---
 
-## 5. 防泄漏控制(“只给谜题本身,一分不多”)
+## 5. Anti-leak controls ("give the puzzle itself, and not one bit more")
 
-**Bundle 构成**(agent 可见的全部内容):`problem.md`(原文措辞)+ `images/`
-(仅题面页图片)+ `metadata.json`(id/日期/标题/答案格式提示)。逐项控制:
+**Bundle contents** (everything the agent can see): `problem.md` (original
+wording) + `images/` (problem-page images only) + `metadata.json` (id / date
+/ title / answer-format hint). The controls, item by item:
 
-| # | 控制 | 机制 |
+| # | Control | Mechanism |
 |---|---|---|
-| 1 | 答案/解析隔离 | grader 存 `data/graders/`,永不进 bundle;solution 页任何内容不参与打包 |
-| 2 | 超链接剥离 | 题面中所有 `<a>` 仅保留可见文字,URL 一律不输出(extract 层) |
-| 3 | janestreet 令牌清洗 | 投稿邮箱/字面 URL 替换为 `[removed]`(package 层) |
-| 4 | 图片来源 | 仅题面页 `<img>`;文件名含 "sol" 的图片直接报错拦截 |
-| 5 | 图片 URL 隐藏 | metadata 只含文件名+SHA-256,无 source_url |
-| 6 | 答案串扫描 | validate 全 bundle 扫描:答案字符串(≥4 字符)出现即 FAIL;角色名等必然出现的白名单需人工 `answer_in_problem_ok` |
-| 7 | 反馈最小化 | 答错只回传"错误"一个 bit + 被拒的值;无"错在哪/正确答案";答对则会话结束 |
-| 8 | 环境隔离 | 每 run 全新容器(pip 状态/临时文件不跨 run);bare 模式屏蔽宿主配置 |
-| 9 | answer_format 提示 | 只描述格式(如 "integer"),源自题面要求,人工复核过无解析信息 |
+| 1 | Answer/solution isolation | graders live in `data/graders/`, never enter the bundle; no solution-page content enters packaging |
+| 2 | Hyperlink stripping | every `<a>` in the problem keeps its visible text only; no URL is emitted (extract layer) |
+| 3 | janestreet token wash | submission emails / literal URLs become `[removed]` (package layer) |
+| 4 | Image source | only problem-page `<img>`; a filename that contains "sol" raises an error |
+| 5 | Image URL hiding | metadata holds filename + SHA-256 only; no source_url |
+| 6 | Answer-string scan | validate scans the whole bundle: an answer string (≥4 chars) present = FAIL; unavoidable hits (role names) need a human `answer_in_problem_ok` |
+| 7 | Feedback minimization | a wrong answer returns one bit ("wrong") + the rejected value; no "where/why"; a correct answer ends the session |
+| 8 | Environment isolation | a new container per run (pip state / temp files do not cross runs); bare mode masks host configuration |
+| 9 | answer_format hint | format only (e.g. "integer"), taken from the problem statement, human-reviewed to carry no solution information |
 
-**当前状态:144 题(剔除开放题后)全量 validate 通过;已核对答案的题 strict 模式通过。**
+**Status: all 144 puzzles (after open-puzzle exclusion) pass validate;
+answer-checked puzzles pass strict mode.**
 
-**已知残余风险(如实记录,不假装不存在)**:
-- **记忆污染**:模型可能记得旧题答案 —— 按 Jace 决定,允许但必须留痕:
-  零工具记忆探针(每题×每模型)已建档;Phase 0 已实锤 1 例(fable×knight-moves,
-  probe 直接吐出正确答案)+ 1 例疑似(三大模型提交完全相同的 sum-of-squares 最优网格)。
-  报告含剔除探针命中的敏感性分析。
-- **PyPI 侧信道**:理论上某 PyPI 包可能内含谜题解答(如个人解题合集包)。
-  接受为低风险;**每个 pip install 的包名记录在 run.json**,事后可审。
-- **Anthropic API 侧信道**:agent 理论上可用容器内 API key 手工调 web_search
-  服务端工具。工具层已禁 WebSearch/WebFetch;审计层扫描 tool 输入中的
-  `api.anthropic.com`/`web_search` 等模式并打 `suspect_cheating` 标志人工复核。
+**Known residual risks (recorded honestly, not hidden)**:
+
+- **Memorization**: a model can remember an old puzzle answer. Per the
+  operator's decision this is permitted but must leave a trace: a zero-tool
+  memorization probe (each puzzle × each model) is on file. Phase 0
+  confirmed 1 case (fable × knight-moves: the probe emitted the correct
+  answer directly) + 1 suspected case (the three main models submitted the
+  identical sum-of-squares optimal grid). The report includes a sensitivity
+  analysis that excludes probe hits.
+- **PyPI side channel**: in theory a PyPI package can contain puzzle
+  solutions (a personal solutions collection, for example). Accepted as low
+  risk; **each pip install is recorded in run.json** for post-hoc audit.
+- **Anthropic API side channel**: in theory the agent can call the
+  server-side web_search tool by hand with the container's API key. The tool
+  layer disables WebSearch/WebFetch; the audit layer scans tool inputs for
+  patterns such as `api.anthropic.com` / `web_search` and raises
+  `suspect_cheating` for human review.
 
 ---
 
-## 6. 日志与可审计性(“事后可被其他 agent 探查”)
+## 6. Logging and auditability ("open to inspection by other agents later")
 
-**每 run 目录**(`runs/<run_id>/`,永久保留):
+**Per-run directory** (`runs/<run_id>/`, kept permanently):
 
-| 文件 | 内容 |
+| File | Content |
 |---|---|
-| `initial_message.json` | 发给模型的首条消息逐字记录(全部文本块 + 每张图的 media_type/大小/SHA-256/块顺序) |
-| `options.json` | 全部生效参数:模型、上限、工具白名单、system prompt 全文、SDK/CLI 版本、非密 env |
-| `transcript.jsonl` | SDK 全消息流:每条 assistant 消息、**每次工具调用及其完整输入输出**、思考块、ResultMessage(token/成本/每模型用量明细) |
-| `stderr.log` | CLI 进程原始 stderr(错误诊断) |
-| `workdir/` | agent 工作目录终态:它写的每个脚本、每个中间文件、output/answer.json |
-| `run.json` | 结构化总账(见下) |
+| `initial_message.json` | verbatim first message to the model (every text block + each image's media_type / size / SHA-256 / block order) |
+| `options.json` | every effective parameter: model, caps, tool allowlist, full system prompt, SDK/CLI versions, non-secret env |
+| `transcript.jsonl` | the full SDK message stream: every assistant message, **every tool call with complete input and output**, thinking blocks, ResultMessage (tokens / cost / per-model usage) |
+| `stderr.log` | raw CLI process stderr (error diagnosis) |
+| `workdir/` | the agent's final working directory: every script it wrote, every intermediate file, output/answer.json |
+| `run.json` | the structured record (below) |
 
-**run.json 字段**:run_id/puzzle/arm/model_requested/**model_actual(每模型 token,
-Fable 静默转交检测)**/harness 版本/bare_mode/prompt SHA-256×2/时间戳/wall_time/
-num_turns/tool_calls/token 四项/cost_usd/exit_reason/image_delivered/
-**suspect_cheating + suspect_details(命中样本)**/**pip_installs(包名列表)**/
-submitted_answer/correct/grade_method/**grader_snapshot(判分时刻的
-answer/type/tolerance/verifier 快照 —— grader 后续被改也能复现当时判分)**。
+**run.json fields**: run_id / puzzle / arm / model_requested /
+**model_actual (per-model tokens; detects silent Fable handoff)** / harness
+versions / bare_mode / prompt SHA-256 ×2 / timestamps / wall_time /
+num_turns / tool_calls / four token counts / cost_usd / exit_reason /
+image_delivered / **suspect_cheating + suspect_details (matched samples)** /
+**pip_installs (package names)** / submitted_answer / correct / grade_method
+/ **grader_snapshot (the answer / type / tolerance / verifier at grading
+time — a later grader edit cannot hide what the verdict saw)**.
 
-**全局账本**:`runs/runs.jsonl`(逐行、幂等续跑)、`runs/probes.jsonl`(记忆探针:
-模型原话、UNKNOWN 与否、是否命中)、`runs/image_smoke.jsonl`(每图×每模型的描述全文)。
+**Global ledgers**: `runs/runs.jsonl` (append-only lines; idempotent
+resume), `runs/probes.jsonl` (memorization probes: the model's words,
+UNKNOWN or not, hit or not), `runs/image_smoke.jsonl` (full description text
+per image × model).
 
-**判分可回溯**(针对“题多了判分 bug 会更多”):grader_snapshot + workdir 保留
-= 任何时候可用 `analysis.regrade` 全量重判并列出每个 verdict 翻转(Phase 0 实战
-验证过:等号格式 bug 修复后 regrade 翻转 3 个误判,备份原账本)。审计工具:
-`analysis.audit_transcripts`(20 秒生成全部 run 的审查表:答案/flags/工具统计/bash 样本)。
-
----
-
-## 7. 判分体系(确定性为主 + LLM judge 兜底)
-
-1. **确定性归一化链**(`grading/normalize.py`,**主判分**):清洗(空白/千分位/货币/
-   引号)→ 整数 → 数值(浮点或 sympy 求值精确式,支持 `sqrt/π/^`)→ 容差比较
-   (exact/rel/abs)→ sympy 符号等价 → casefold 字符串 + 别名。
-   特殊:`精确式 = 小数` 等号复合取任一侧;multi 型逗号切分逐项(顺序敏感)。
-2. **证书验证器**(`grading/verifiers.py`):需要"作品"的题(如 sum-of-squares 的
-   (总和,25数字))做可编程验证 —— 格式/自洽/约束/最优性逐项检查,防裸报数字作弊。
-3. **LLM judge 兜底**(`grading/llm_judge.py`,**次级、批次后运行**,Jace addendum 2):
-   有些答案格式刁钻(自由文本、多种等价写法、怪分隔)。judge 用 opus(关思考、
-   结构化输出)判定语义/数学等价,只对"难格式"case 触发(grader 标 `grading_mode:llm`、
-   或 answer_type ∈ {string,expression,multi}、或确定性判错但有非空答案=疑似漏判)。
-   **判定写入独立字段 `llm_judge_correct`,绝不覆盖确定性主判**;报告两个数并列,
-   分歧逐条列出。judge 被要求"不确定就判否、不给部分分",防止分数虚高。
-   正确用法:judge 发现确定性漏判 → 人工修 grader(加 alias/容差)→ `analysis.regrade`
-   全量重判,而非盲信 LLM。
-4. **单元测试**:`grading/test_normalize.py` 22 用例(含对抗性变体),全过。
-5. 所有 ground truth 有人工核对记录(review_note)。
-
-**针对"题多了判分 bug 更频繁"**:①judge 兜底自动标出确定性可能漏判的 case;
-②每 run 存 grader_snapshot + 完整 workdir → `analysis.regrade` 可在修 grader 后
-全量重判并列出每个 verdict 翻转(Phase 0 实战翻正过 3 个);③`analysis.audit_transcripts`
-秒级生成全 run 审查表。判分对错永远可追溯、可回放、可复核。
+**Grading is replayable** (against "more puzzles = more grading bugs"):
+grader_snapshot + preserved workdir = `analysis.regrade` can re-grade
+everything at any time and list each verdict flip (proven in Phase 0: after
+the equation-format bug fix, regrade flipped 3 wrong verdicts; the old
+ledger was backed up). Audit tool: `analysis.audit_transcripts` (a review
+sheet for all runs in ~20 seconds: answers / flags / tool stats / bash
+samples).
 
 ---
 
-## 8. 编排与护栏
+## 7. Grading system (deterministic first + LLM judge backstop)
 
-- 并发 3(rate-limit 友好);**预算熔断 $190**(累计 cost_usd 实时核算,超线停队);
-- 幂等续跑:(题, 模型, sample) 已有终态记录即跳过,中断后重跑同命令续上;
-- 重试:仅基础设施错误 ≤2 次;答错永不重试;
-- 每 run 三重上限:max_turns(SDK)/ max_budget_usd / 30min wall-clock(harness 内部)。
+1. **Deterministic normalization chain** (`grading/normalize.py`, **the
+   primary verdict**): cleanup (whitespace / thousands separators / currency
+   / quotes) → integer → numeric (float or sympy exact expression, supports
+   `sqrt/π/^`) → tolerance compare (exact/rel/abs) → sympy symbolic
+   equivalence → casefold string + aliases. Special cases: `exact form =
+   decimal` equations accept either side; the `multi` type splits on commas
+   and compares item by item (order-sensitive).
+2. **Certificate verifiers** (`grading/verifiers.py`): puzzles that demand a
+   "work product" (e.g. sum-of-squares: the (total, 25-digit grid) pair) get
+   programmatic verification — format / self-consistency / constraints /
+   optimality checked item by item. This stops bare-number cheating.
+3. **LLM judge backstop** (`grading/llm_judge.py`, **secondary, runs after
+   each batch**, operator addendum 2): some answer formats are awkward (free
+   text, many equivalent spellings, odd separators). The judge uses opus
+   (thinking off, structured output) to test semantic/mathematical
+   equivalence. It triggers only for "hard format" cases (grader marks
+   `grading_mode: llm`, or answer_type ∈ {string, expression, multi}, or
+   deterministic-wrong with a non-empty answer = possible miss). **The
+   verdict goes to the separate field `llm_judge_correct` and never
+   overrides the deterministic verdict**; the report shows both numbers, and
+   each disagreement is listed. The judge must "answer no when unsure, give
+   no partial credit" — this stops score inflation. Correct use: the judge
+   finds a deterministic miss → a human fixes the grader (alias / tolerance)
+   → `analysis.regrade` re-grades everything. Never trust the LLM blindly.
+4. **Unit tests**: `grading/test_normalize.py`, 22 cases (with adversarial
+   variants), all pass.
+5. Every ground-truth answer has a human review record (review_note).
+
+**Against "more puzzles = more grading bugs"**: (1) the judge backstop flags
+possible deterministic misses automatically; (2) every run stores
+grader_snapshot + full workdir → `analysis.regrade` re-grades all runs after
+a grader fix and lists each verdict flip (3 flips corrected in Phase 0); (3) 
+`analysis.audit_transcripts` generates a full review sheet in seconds. A
+grading verdict stays traceable, replayable, and reviewable.
 
 ---
 
-## 9. 执行序列(checkpoint 分批,详见 BENCH_PROGRAM.md)
+## 8. Orchestration and guardrails
+
+- Concurrency 3 (rate-limit friendly); **budget breaker $190** (cumulative
+  cost_usd in real time; over the line = stop the queue). (Historical v4
+  values; the operational history — breaker $780→$900→$1000, concurrency
+  experiments 3→8→24 that settled at 12 and later moved to 10 — is in the
+  BENCH_PROGRAM change log.)
+- Idempotent resume: a (puzzle, model, sample) key with a terminal record is
+  skipped; after an interruption, the same command continues the run.
+- Retries: infrastructure errors only, ≤2; a wrong answer is never retried.
+- Three caps per run: max_turns (SDK) / max_budget_usd / 30min wall clock
+  (inside the harness; later raised to 45min — see bench.yaml).
+
+---
+
+## 9. Execution sequence (checkpoint batches; details in BENCH_PROGRAM.md)
 
 ```bash
-# 0) 网络隔离 gate(黑名单模型)
+# 0) network-isolation gate (blocklist model)
 docker compose -f docker/docker-compose.yml up -d proxy
 docker compose -f docker/docker-compose.yml run --rm agent bash docker/verify_isolation.sh
 
-# 1) 构建分批计划
+# 1) build the batch plans
 python -m orchestrate.checkpoints
 
-# 2) 逐批:发射 → gate 审计 → 通过才发下批(以 cp0 金丝雀为例)
-python -m harness.probe          # 记忆探针(当批题 × 3 模型)
-python -m harness.image_smoke    # 图片冒烟(当批题 × 3 模型)
+# 2) per batch: launch -> gate audit -> pass before the next batch (cp0 canary shown)
+python -m harness.probe          # memorization probes (batch puzzles x 3 models)
+python -m harness.image_smoke    # image smoke test (batch puzzles x 3 models)
 python -m orchestrate.runner --plan plans/checkpoints/cp0.json
-python -m grading.llm_judge      # 难格式复核
+python -m grading.llm_judge      # hard-format review
 python -m analysis.checkpoint --batch plans/checkpoints/cp0.json --name cp0
-#   PASS → cp1;WARN → 处理后继续;HARD-FAIL → 停,修正后重跑受影响子集
+#   PASS -> cp1; WARN -> handle, then continue; HARD-FAIL -> stop, fix, re-run the affected subset
 
-# 3) 全部批次完成后
+# 3) after all batches
 python -m analysis.report
 python -m analysis.audit_transcripts
 ```
 
 ---
 
-## 10. 预算与功效(v4 定稿:Jace 已批全量三模型)
+## 10. Budget and statistical power (v4 final: full three-model run approved)
 
-**选定配置:全部可用题(144)× 3 模型(Haiku/Sonnet/Opus,去 Fable)× k=3**
-= 1,296 个独立采样会话。实测单次均价 haiku $0.30 / sonnet $0.79 / opus $0.55 →
-每题 $4.92 → **agentic 总估 ~$699** + 探针/judge ~$10;**熔断线 $780**。
+**Chosen configuration: all usable puzzles (144) × 3 models
+(Haiku/Sonnet/Opus, no Fable) × k=3** = 1,296 independent sample sessions.
+Measured mean prices: haiku $0.30 / sonnet $0.79 / opus $0.55 per sample →
+$4.92 per puzzle → **agentic total estimate ~$699** + probes/judge ~$10;
+**circuit breaker $780**.
 
-去 Fable 的理由:最贵($0.82/次 × $50/MTok 输出)且探针已实锤记忆污染
-(knight-moves 零工具背出答案);三模型对比覆盖了产品上最重要的档位梯度。
+Why Fable is out: the most expensive ($0.82 per sample × $50/MTok output),
+and the probe already confirmed memorization (knight-moves: the answer
+recited with zero tools). The three-model comparison covers the product
+tiers that matter most.
 
-**统计功效(P=144)**:配对 MDE **±9pp**(相邻档如 Sonnet vs Opus 的真实差距
-大概率可检出);单模型 pass@1 95% CI 半宽 ~±8pp;post-cutoff 子组(~5 题)只做
-描述性报告。墙钟:并发 3 约 ~28h,分批跨夜执行,断点可续。
-Sonnet 介绍价 2026-08-31 到期,全程在此前完成则按介绍价计费(估算已按介绍价)。
+**Statistical power (P=144)**: paired MDE **±9pp** (a real gap between
+adjacent tiers, such as Sonnet vs Opus, is detectable with high
+probability); single-model pass@1 95% CI half-width ~±8pp; the post-cutoff
+subgroup (~5 puzzles) gets descriptive reporting only. Wall clock: at
+concurrency 3, about ~28h, run in batches across nights, resumable.
+The Sonnet introductory price expires 2026-08-31; a run completed before
+that date is billed at the introductory price (the estimate uses it).
 
 ---
 
-## 11-bis. Checkpoint 护栏(v4,autoresearch 式分批推进)
+## 11-bis. Checkpoint guardrails (v4, autoresearch-style batching)
 
-全量跑分不一次性发射,而是 **5 个递增成本批次,批间设自动 gate**
-(详细协议在 `BENCH_PROGRAM.md`,那是人类可改的方向盘;此处为摘要):
+The full run does not launch at once. It moves in **5 batches of increasing
+cost, with an automatic gate between batches** (the detailed protocol is in
+`BENCH_PROGRAM.md` — that file is the human-editable steering wheel; this is
+the summary):
 
-| 批次 | 题数 | k | 估算 | 定位 |
+| Batch | Puzzles | k | Estimate | Role |
 |---|---|---|---|---|
-| cp0 | 3(校准题) | 1 | ~$5 | 基建金丝雀,不计分 |
-| cp1 | 12(含校准题) | 3 | ~$59 | 判分校准 + 成本模型验证 |
-| cp2 | 25 | 3 | ~$123 | 第一个规模批 |
-| cp3 | 45 | 3 | ~$221 | 主体 |
-| cp4 | 59 | 3 | ~$290 | 收尾 |
+| cp0 | 3 (calibration) | 1 | ~$5 | infrastructure canary, not scored |
+| cp1 | 12 (incl. calibration) | 3 | ~$59 | grading calibration + cost-model check |
+| cp2 | 25 | 3 | ~$123 | first batch at scale |
+| cp3 | 45 | 3 | ~$221 | main body |
+| cp4 | 59 | 3 | ~$290 | completion |
 
-批内按 年代×难度 分层轮发(每批有代表性,外推有效)。每个 gate
-(`analysis.checkpoint`)自动审:错误率/超时率/提交率/bare/图片投递/transcript
-完整性(HARD 级,命中即停)、judge 分歧队列与判错样本(逐批人工过)、各模型
-均价 vs 预测带 [0.4×,2.0×]、累计花费 vs $780 熔断线、作弊标记/pip 清单。
-修正规则:grader 层修正 → regrade 重判不重跑;harness 层修正 → 受影响子集标
-invalid 重跑。答案核对随批推进(批 N 发射前该批 grader 全 reviewed)。
-里程碑 $400/$600 通报 Jace;协议级变更先问后改。
+Batches are stratified by era × difficulty in a round-robin (each batch is
+representative; extrapolation is valid). Each gate (`analysis.checkpoint`)
+audits automatically: error rate / timeout rate / submission rate / bare /
+image delivery / transcript completeness (HARD level — a hit stops the
+program), the judge-disagreement queue and wrong-answer samples (human
+review per batch), per-model mean cost vs the forecast band [0.4×, 2.0×],
+cumulative spend vs the $780 breaker, cheating flags / pip list. Correction
+rules: a grader-level fix → regrade, no re-run; a harness-level fix → mark
+the affected subset invalid and re-run it. Answer checks proceed with the
+batches (before batch N launches, all its graders are reviewed). Milestone
+reports to the operator at $400 / $600; protocol-level changes are asked
+first, changed after.
 
-## 11. 已知偏差与诚实声明
+## 11. Known biases and honest statements
 
-- **统计功效**:P=144 → 配对 MDE ≈ ±9pp;报告如实标注 —— 只能可靠区分大于该
-  阈值的模型差距,分层子组(如 post-cutoff ~5 题)只做描述性报告。
-- **指标语义**:solve@N 是"N 次带反馈尝试内解出",非独立采样,不能与 Chen pass@k
-  或 Phase 0 的 v1 数据直接比较;Phase 0 账本已归档隔离。
-- **反馈的双刃**:同会话重试让 agent 能纠错(更贴近真实解题),但也意味着一次会话
-  的 N 次尝试相关性高,SEM 只来自题间方差(P 题);无跨会话重复的方差缩减。
-  若某题预算允许,可跑多个独立会话(replicate)进一步收窄,当前默认每题 1 会话
-  以把预算铺给更多题。
-- **网络黑名单是经验性的**:未列入的站点若托管解答理论可达(无搜索引擎则难发现);
-  Jace 接受此权衡,transcript 全量留痕供事后审计。
-- Sonnet 5 介绍价 2026-08-31 到期,在此之前跑完按介绍价计费。
-- 探针无法完全证伪"解题中回忆起答案";证书验证器 + LLM judge + transcript 审计
-  是多道防线,报告分层呈现记忆污染剔除敏感性。
+- **Statistical power**: P=144 → paired MDE ≈ ±9pp; the report states this.
+  Only model gaps above the threshold are reliably detectable; stratified
+  subgroups (post-cutoff, ~5 puzzles) get descriptive reporting only.
+- **Metric semantics**: solve@N ("solved within N feedback attempts") is not
+  independent sampling; it cannot be compared with Chen pass@k or with the
+  Phase 0 v1 data. The Phase 0 ledger is archived separately.
+- **The two edges of feedback**: same-session retry lets an agent correct
+  itself (closer to real solving), but the N attempts of one session are
+  highly correlated; the SEM comes from puzzle variance only (P puzzles). If
+  budget allows, several independent sessions per puzzle (replicates) narrow
+  it further; the default is 1 session per puzzle so the budget covers more
+  puzzles. (Moot in v3/v4: feedback is off.)
+- **The network blocklist is empirical**: a site not on the list can host a
+  solution and stays reachable in theory (hard to discover without search
+  engines). The operator accepts this trade-off; the transcript keeps a full
+  trace for post-hoc audit.
+- The Sonnet 5 introductory price expires 2026-08-31; the run completed
+  before that date is billed at the introductory price.
+- A probe cannot fully falsify "the model recalled the answer while
+  solving". The certificate verifiers + LLM judge + transcript audit are
+  additional defense layers; the report presents the memorization-excluded
+  sensitivity split.
+
+---
+
+## Addendum — GPT (Codex) arm, added 2026-07-22
+
+The GPT-5.6 arm (sol / terra / luna) mirrors this design for a native-agent
+product comparison. Differences from the Claude arm, in full:
+
+- Harness: Codex CLI 0.145.0 (`codex exec --json`) instead of Claude Code;
+  runner `harness/run_agent_codex.py`; image `docker/Dockerfile.codex`.
+- Egress proxy: same blocklist, with the vendor block mirrored — the Codex
+  filter (`docker/proxy/filter.codex`) blocks anthropic.com and allows
+  api.openai.com. Verification: `docker/verify_isolation_codex.sh`.
+- Per-run budget caps mirror the Claude tiers: sol $3.00 / terra $1.50 /
+  luna $0.75. Cost is computed from streamed token usage × public prices.
+- Everything else is identical: bundles, task text, k=3, host-side grading,
+  run-record schema, tmpfs answer masks, /out output isolation, default
+  (never overridden) reasoning effort.
+
+See `config/models.json` for the tier mapping and prices, and the
+BENCH_PROGRAM change log (2026-07-22 onward) for the run history.
