@@ -189,3 +189,28 @@
   schema/per-tier caps; Codex now also enforces the per-run budget cap by
   streaming usage (parity with the Claude SDK). Reasoning effort not overridden
   on either side (recorded).
+- 2026-07-23 **GPT-5.6 arm complete — six-model head-to-head done**. 1206 GPT runs
+  (134 puzzles x sol/terra/luna x k=3) all terminal, 0 error, 98.3% submission,
+  0 bare/image/malformed, 0 cheating suspects, all transcripts present. GPT spend
+  $440.95; combined agentic total $1428.74. Infra incidents handled autonomously:
+  (a) OpenAI insufficient_quota paused cp1 at $13.80 -> Jace added auto-recharge,
+  resumed; (b) hard-puzzle solvers segfault a lot -> WSL wrote 6GB core dumps to C
+  -> ulimits:core:0 + 2-min sweeper; (c) memory pressure from 12x8g containers grew
+  the C pagefile -> 48GB WSL memory cap (.wslconfig) + concurrency 12->10; (d) Docker
+  hung during a reboot, runner marked 880 in-flight as $0 errors -> clean_start +
+  idempotent re-run recovered all 880, 0 residual error.
+  **RESULTS — pass@3 (Chen unbiased), native-agent product comparison
+  (GPT-under-Codex vs Claude-under-Claude-Code):**
+    gpt-5.6-sol   81.3% +/- 3.4    (> opus 4.8 by +10.7pp, significant)
+    claude-opus-4-8 70.1% +/- 4.0
+    gpt-5.6-terra 65.7% +/- 4.1    (~ opus, +4.2pp NOT significant)
+    claude-sonnet-5 47.8% +/- 4.3
+    gpt-5.6-luna  55.2% +/- 4.3    (~ sonnet, -0.2pp NOT significant)
+    claude-haiku-4-5 24.6% +/- 3.7
+  Within-family ladders both monotone & significant. Cost/run: GPT cheaper at every
+  tier (luna $0.15 / terra $0.37 / sol $0.57 vs haiku $0.27 / sonnet $0.94 / opus
+  $1.25). Memorization-excluded pass@3 essentially unchanged (no probe hits drove
+  results). CAVEAT for write-up: 'mean turns' is NOT cross-harness comparable —
+  Codex counts a whole session as 1 turn; the comparable activity metric is
+  tool_calls (GPT mean 11.2, median 7), confirming genuine multi-step agentic
+  solving. Deliverable: runs/FINAL_REPORT_6models.md.

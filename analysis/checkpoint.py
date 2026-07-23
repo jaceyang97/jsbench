@@ -134,7 +134,9 @@ def main() -> None:
         f"bare_mode violations: {len(non_bare)}"
         + (f" {[r['run_id'] for r in non_bare][:3]}" if non_bare else ""))
 
-    non_sess = [r for r in ok_runs if r.get("runner") not in ("sdk-session",)]
+    # sdk-session = Claude Code harness; codex-exec = Codex harness. Both are
+    # first-class runners for this benchmark.
+    non_sess = [r for r in ok_runs if r.get("runner") not in ("sdk-session", "codex-exec")]
     (warn if non_sess else info).append(f"non-standard runner: {len(non_sess)}")
 
     img_runs = [r for r in ok_runs if r.get("image_delivered") is False
