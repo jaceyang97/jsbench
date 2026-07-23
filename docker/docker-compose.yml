@@ -22,6 +22,10 @@ services:
     # concurrent run). Cap the container so an OOM stays inside the offending
     # run; 8g comfortably covers every legitimately observed peak (~5.6GB).
     mem_limit: 8g
+    # No core dumps (see agent-codex): a crashing solver otherwise writes a
+    # multi-GB WSL crash dump to the C drive.
+    ulimits:
+      core: 0
     environment:
       - HOME=/home/node
       - HTTPS_PROXY=http://proxy:8888
@@ -69,6 +73,13 @@ services:
       dockerfile: docker/Dockerfile.codex
     user: node
     mem_limit: 8g
+    # Disable core dumps: hard-puzzle solvers occasionally segfault/OOM, and WSL
+    # writes a multi-GB core dump to the Windows host (C:\...\Temp\wsl-crashes)
+    # per crash, which fills the C drive. The crash itself is isolated to its
+    # container; we don't need the dump. (New `compose run` containers pick this
+    # up immediately — no restart needed.)
+    ulimits:
+      core: 0
     environment:
       - HOME=/home/node
       - HTTPS_PROXY=http://proxy-codex:8888
