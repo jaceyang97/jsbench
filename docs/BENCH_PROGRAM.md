@@ -214,3 +214,10 @@
   Codex counts a whole session as 1 turn; the comparable activity metric is
   tool_calls (GPT mean 11.2, median 7), confirming genuine multi-step agentic
   solving. Deliverable: runs/FINAL_REPORT_6models.md.
+- 2026-07-24 GPT arm judge QA: only 2 disagreements (both 2025-12-robot-javelin),
+  and both are LLM-judge arithmetic errors — the submitted exact forms evaluate to
+  0.4954 and 0.4976, neither matching the 0.4939370904 target, so the deterministic
+  'wrong' verdict is correct on both. NO regrade needed. Six-model pass@3 numbers are
+  FINAL. Grading confirmed fair to GPT output (spot-checked wrong answers = genuine
+  failures, not format false-negatives). BENCHMARK COMPLETE. Deliverables:
+  runs/FINAL_REPORT_6models.md, runs/FINAL_audit_transcripts_6models.txt.
