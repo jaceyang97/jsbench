@@ -48,7 +48,7 @@ submission); TASK_RULES asks for exactly that.
 | Haiku 4.5 | claude-haiku-4-5-20251001 | **3** | $0.75 | 30 | 2025-02 |
 | Sonnet 5 | claude-sonnet-5 | **3** | $1.50 | 40 | 2026-01 |
 | Opus 4.8 | claude-opus-4-8 | **3** | $3.00 | 40 | 2026-01 |
-| ~~Fable 5~~ | ~~claude-fable-5~~ | not competing | — | — | cost + memorization, see §10 |
+| ~~Fable 5~~ | ~~claude-fable-5~~ | not competing | — | — | high cost only, see §10 |
 
 k = 3 for all models: pass@1 / pass@2 / pass@3 stay comparable across models.
 
@@ -321,10 +321,15 @@ Measured mean prices: haiku $0.30 / sonnet $0.79 / opus $0.55 per sample →
 $4.92 per puzzle → **agentic total estimate ~$699** + probes/judge ~$10;
 **circuit breaker $780**.
 
-Why Fable is out: the most expensive ($0.82 per sample × $50/MTok output),
-and the probe already confirmed memorization (knight-moves: the answer
-recited with zero tools). The three-model comparison covers the product
-tiers that matter most.
+Why Fable is out: **cost only** — the most expensive of the four Anthropic
+tiers at plan time ($0.82 per sample × $50/MTok output). The three-model
+comparison covers the product tiers that matter most. The memorization
+probe is a **separate diagnostic dimension** (see §5) and is not a selection
+criterion for the competition. The probe ran on all four tiers, including
+Fable, and its results still support the sensitivity analysis in
+`results/FINAL_REPORT.md`. (See the 2026-08-04 change-log entry in
+`BENCH_PROGRAM.md` for the correction to earlier phrasing that conflated
+these two facts.)
 
 **Statistical power (P=144)**: paired MDE **±9pp** (a real gap between
 adjacent tiers, such as Sonnet vs Opus, is detectable with high

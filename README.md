@@ -15,6 +15,16 @@ this benchmark applies to the model together with its harness.
 
 ## Results
 
+> **Note on the published ranking.** This cross-harness ranking has a **known
+> defect**: the per-run budget and turn caps were not truly aligned across
+> the two harnesses (the Codex per-run cap did not bind in practice, while
+> the Claude side frequently hit its cap and got cut off). A **revision is in
+> progress**, and covers: re-alignment on the "one full agent invocation" unit,
+> explicit disclosure of cap-cut runs, back-fill of the earlier-omitted open
+> puzzles, phase-level trace analysis, and a self-verification-stratified
+> pass@k. The frozen numbers below stay as published; the revised methodology
+> will appear in a separate write-up.
+
 The full run is **134 puzzles × 6 models × 3 independent samples = 2,412
 sessions**. The metric is unbiased **pass@3** (Chen et al. 2021). The standard
 error is computed across puzzles.

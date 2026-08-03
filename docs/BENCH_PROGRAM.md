@@ -17,7 +17,8 @@ changed.
 
 - **Scope**: all usable puzzles (~142 at plan time, after
   `exclude_recommended`) × 3 models (Haiku 4.5 / Sonnet 5 / Opus 4.8; Fable 5
-  does not compete — high cost plus confirmed memorization) × k=3 independent
+  does not compete — **high cost only**; the memorization probe is a separate
+  diagnostic dimension and is not a selection criterion) × k=3 independent
   samples.
 - **Metric**: Chen unbiased pass@k (k=3), paired differences, clustered SE,
   pre/post-cutoff strata; memorization and guessable puzzles listed
@@ -379,3 +380,21 @@ puzzles. The checks for cp2–cp4 proceed with the batches.
   clean_start_docker.sh now comes from the LOCALAPPDATA environment
   variable; a full-history scan found zero key material in all 36 commits.
   The per-puzzle answer files (data/, runs/) stay local, as before.
+
+- 2026-08-04 — corrections and additions to the public docs; no number, date,
+  or dollar amount changed.
+  (1) The stated reason for excluding Fable 5 from the competition is now
+  **cost only** ($0.82 per sample × $50/MTok output; the most expensive of
+  the four Anthropic tiers at plan time). The earlier text "high cost plus
+  confirmed memorization" conflated two independent facts. The zero-tool
+  memorization probe is a **separate diagnostic dimension** (see CONFIG_MAP
+  §5) and does not enter the selection of models for the competition. The
+  probe still ran on all four tiers, and its results (fable 27/135,
+  opus 6/135, sonnet 1/135, haiku 0/135) still support the memorization
+  sensitivity analysis in `results/FINAL_REPORT.md`.
+  (2) README now carries a **known-defect notice** above the ranking table.
+  It states that the per-run budget and turn caps were not aligned across
+  the two harnesses (Codex caps did not bind in practice; the Claude side
+  frequently hit its cap and got cut off) and that a revised write-up is in
+  progress. The published numbers are not changed.
+  (3) The docs remain in controlled English per the 2026-07-24 rewrite.
