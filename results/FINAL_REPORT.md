@@ -105,16 +105,16 @@ Per-puzzle grading rules:
 | 2022-04-almost-magic      | min   | 470                                | JS best received |
 | 2024-06-altered-states-2  | floor | 165,379,868 (JS leaderboard cutoff)| JS never published a top score; floor = half of the maximal 2020-census sum |
 
-The back-fill is 9 puzzles × 6 tiers × k=3 = 162 independent samples.
-Terminal spend: **$85.85** (mean-cost forecast was $96.39; worst-case
-per-tier caps were $283.50). One OpenAI credit outage hit the GPT arm
-mid-run; the runner re-queued the 21 affected keys idempotently and they
-finished on retry after the credit was topped up. Per-tier pass rates
-on the 9 open puzzles:
+The back-fill is 9 puzzles × 6 tiers × k=3 = 162 independent samples. All
+162 runs are terminal. Terminal spend: **$86.77** (mean-cost forecast
+was $96.39; worst-case per-tier caps were $283.50). One OpenAI credit
+outage hit the GPT arm mid-run; the runner re-queued the 21 affected keys
+idempotently and they finished on retry after the credit was topped up.
+Per-tier pass rates on the 9 open puzzles:
 
 | tier | correct | runs | rate |
 |---|---:|---:|---:|
-| gpt-5.6-sol   | 25 | 26 | 96.2% |
+| gpt-5.6-sol   | 26 | 27 | 96.3% |
 | gpt-5.6-terra | 24 | 27 | 88.9% |
 | gpt-5.6-luna  | 22 | 27 | 81.5% |
 | claude-opus-4-8    | 20 | 27 | 74.1% |
@@ -133,7 +133,7 @@ Per-puzzle × tier (correct / samples):
 | 2017-08-middlylinks       | 0/3 | 1/3 | 3/3 | 3/3 | 3/3 | 3/3 |
 | 2019-07-scraggle          | 1/3 | 2/3 | 2/3 | 2/3 | 3/3 | 3/3 |
 | 2022-04-almost-magic      | 1/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 |
-| 2024-06-altered-states-2  | 1/3 | 0/3 | 0/3 | 3/3 | 3/3 | 2/2 |
+| 2024-06-altered-states-2  | 1/3 | 0/3 | 0/3 | 3/3 | 3/3 | 3/3 |
 
 Notes on the 9-puzzle set:
 
@@ -144,12 +144,12 @@ Notes on the 9-puzzle set:
   tiers 0/3. This puzzle demands both geometric reasoning (over the
   canonical laser + goal layout the grader ships) and combinatorial
   search over mirror placements.
-- altered-states-2: split by arm. All three GPT tiers scored 3/3 or 2/2,
-  but on the Claude side only haiku got 1/3 and both opus and sonnet went
-  0/3. The task rewards state-name enumeration and small king-move search
-  with a US-census scoring; the Codex CLI's default reasoning appears to
+- altered-states-2: split by arm. All three GPT tiers scored 3/3, but on
+  the Claude side only haiku got 1/3 and both opus and sonnet went 0/3.
+  The task rewards state-name enumeration and small king-move search
+  against a US-census score. The Codex CLI's default reasoning appears to
   drive this consistently.
-- No submission beat the JS-published reference on any of the 161
+- No submission beat the JS-published reference on any of the 162
   terminal runs. The BEATS-REF flag, if it fires, is what the write-up
   gallery will surface for insight review; its absence here says the
   9 open puzzles' JS-published references still stand across the six
