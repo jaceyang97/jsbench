@@ -1,0 +1,137 @@
+[
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "gpt-sol",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "gpt-luna",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "gpt-terra",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "gpt-sol",
+    "k": 3
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "purpose": "open-puzzle back-fill (2026-08-04); the 9 puzzles previously in exclude_recommended, reinstated under an envelope + certificate-verifier grader. Six models (Claude haiku/sonnet/opus + GPT luna/terra/sol) x k=3 x 9 puzzles = 162 runs total across the two arms.",
+  "puzzles": [
+    "2014-07-chain-reaction",
+    "2014-10-minesweeping",
+    "2015-04-hall-of-mirrors",
+    "2015-06-polymath",
+    "2016-08-swing-time",
+    "2017-08-middlylinks",
+    "2019-07-scraggle",
+    "2022-04-almost-magic",
+    "2024-06-altered-states-2"
+  ],
+  "tiers_claude": [
+    "haiku",
+    "sonnet",
+    "opus"
+  ],
+  "tiers_gpt": [
+    "luna",
+    "terra",
+    "sol"
+  ],
+  "k": 3,
+  "runs_per_arm": 81,
+  "cost_estimate_usd_mean_cased": {
+    "haiku_27_runs": 7.29,
+    "sonnet_27_runs": 25.92,
+    "opus_27_runs": 33.75,
+    "luna_27_runs": 4.05,
+    "terra_27_runs": 9.99,
+    "sol_27_runs": 15.39,
+    "total_mean": 96.39,
+    "note_from_cp2_cp4_history": "These 9 are the hardest open-optimization puzzles; expect substantial per-run-cap hits. Realistic band is $150-$200; worst case (every run hits its per-run cap) is $283.50."
+  },
+  "cost_estimate_usd_worst_case": {
+    "haiku_27_at_075": 20.25,
+    "sonnet_27_at_150": 40.5,
+    "opus_27_at_300": 81.0,
+    "luna_27_at_075": 20.25,
+    "terra_27_at_150": 40.5,
+    "sol_27_at_300": 81.0,
+    "total_worst": 283.5
+  }
+}

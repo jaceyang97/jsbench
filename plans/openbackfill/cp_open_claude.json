@@ -1,0 +1,137 @@
+[
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-07-chain-reaction",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2014-10-minesweeping",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-04-hall-of-mirrors",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2015-06-polymath",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2016-08-swing-time",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2017-08-middlylinks",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2019-07-scraggle",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2022-04-almost-magic",
+    "tier": "opus",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "haiku",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "sonnet",
+    "k": 3
+  },
+  {
+    "puzzle_id": "2024-06-altered-states-2",
+    "tier": "opus",
+    "k": 3
+  }
+]

@@ -414,3 +414,135 @@ product comparison. Differences from the Claude arm, in full:
 
 See `config/models.json` for the tier mapping and prices, and the
 BENCH_PROGRAM change log (2026-07-22 onward) for the run history.
+
+---
+
+## Addendum — envelope grader for open-puzzle back-fill (2026-08-04)
+
+Nine open-competition puzzles were previously excluded (`exclude_recommended`)
+because they have no unique answer. On 2026-08-04 they were reinstated under
+a separate submission form and a separate grading path. The 6-model ranking
+on the 134-puzzle set does not change.
+
+### Submission envelope
+
+For the 9 back-fill puzzles, the agent writes `output/answer.json` as the
+whole envelope:
+
+```
+{"value": <objective value the agent claims>,
+ "solution": <complete solution object, JSON-serializable>}
+```
+
+The 134 legacy puzzles keep the legacy `{"answer": "<string>"}` shape,
+byte-identical to the pre-back-fill prompt. The submission form is switched
+per puzzle by a `submission_form` field in the bundle metadata; a
+`SUBMISSION_FORM_ENVELOPE` clause replaces the legacy "of the form
+{...answer...}" clause in TASK_RULES only for the envelope puzzles. The
+puzzle-specific shape of `solution` is spelled out in each puzzle's
+`answer_format` block. The TASK_RULES template SHA changes (v3), so the 9
+new runs record a different `task_rules_sha256` than the 134 frozen runs —
+this drift is deliberate and is called out in the change log.
+
+### Compound grader (verifier + trace check)
+
+Grading for the 9 puzzles is a **compound grader**:
+
+- **The deterministic verifier is the gate**. Each puzzle has a certificate
+  verifier in `grading/verifiers.py` that (a) validates the solution's
+  legality against the puzzle rules and (b) recomputes the objective value
+  from the `solution` alone. The verifier never trusts the agent's
+  self-reported `value`. `_verdict_vs_ref(recomputed, grader, tag)` maps
+  the recomputed value against `reference_value` under an
+  `optimization_sense` of `max` / `min` / `eq` / `floor` / `none`. A
+  solution that STRICTLY beats the reference is marked BEATS-REF in the
+  reason string for the write-up example gallery.
+
+- **The fable trace check is the record, not the gate**. Per methodology.md:
+  even if the trace shows that the agent copied a memorized configuration
+  or that the transcribed geometry differs from the canonical, the
+  deterministic gate still decides pass/fail. The trace check produces
+  labels (Schoenfeld episode share, self-verification form, memorization /
+  behavioral form, answer-in-turn tag) that feed the writeup gallery and
+  the descriptive-only tables; it does not override the primary verdict.
+
+### Canonical geometry pinning
+
+Four of the nine puzzles have puzzle-invariant geometry that the agent
+cannot be trusted to transcribe (adversarial review before back-fill
+launch confirmed that trusting the agent's inline transcription lets a
+fabricated envelope claim any score). For those four, the grader ships
+canonical geometry, and `grading/grade.py` injects it into the envelope's
+`solution` before dispatching to the verifier:
+
+| puzzle | canonical geometry key(s) | pinned source |
+|---|---|---|
+| 2015-04-hall-of-mirrors | `geometry` = {rows, cols, lasers, goals}          | fable transcription cross-checked against JS's 77-point solution |
+| 2015-06-polymath        | `board` = 10x10 integer grid                       | fable transcription cross-checked against JS's 20,160 heptomino placement |
+| 2016-08-swing-time      | `posts` + `start` + `end`                          | fable transcription of the 50 posts on the 20x20 board + start=a1, end=t20; cross-checked against JS's 9-swing 0.7082 solution (rope-wrapping semantics — see below) |
+| 2022-04-almost-magic    | `subsquares` + `outer_rows` + `outer_cols`         | fable transcription cross-checked against JS's 470-sum grid |
+
+The canonical geometry lives in the grader JSON under a
+`canonical_geometry` key; grade.py overrides the matching keys in the
+envelope's `solution` at grade time. The agent may still include those
+keys in its envelope, but the verifier will ignore them. This closes the
+fabrication cheat while keeping the verifier code untouched.
+
+### Swing-time verifier: rope wrapping
+
+The initial swing-time verifier enforced strict radius equality
+(`|cur-post| == |post-stop|`) per swing. This rejected Jane Street's own
+9-swing reference-scoring solution (swing 1 tosses to `a4` from `a1` with
+rope length 3, and the rope wraps around post `c4` so the particle rests
+at `c3` where `|a4-c3|=√5<3`). The puzzle image explicitly allows rope
+wrapping.
+
+The rewritten verifier accepts an optional `wrap` chain per swing (an
+ordered list of post positions the rope bends around during the swing) and
+checks rope conservation:
+
+```
+|cur - swing_post| = |swing_post - wrap[0]|
+                   + |wrap[0] - wrap[1]|
+                   + ...
+                   + |wrap[-1] - stop|
+```
+
+Cost per swing stays `1 / |cur - swing_post|²` (the physical rope length).
+
+The full arc-obstruction rule (the particle may not sweep through any
+other post during the swing) is deferred to the trace-check pass because
+it needs a real physics simulation; the grader's optimization_sense is
+`none` (pass on legality only, log the cost for the writeup gallery). A
+cost far below JS's 0.7082 will be flagged in the gallery for a
+trace-check audit.
+
+### Envelope shape hazards and safety
+
+`grade.py` wraps `run_verifier` in a try/except so any future shape crash
+inside a verifier becomes a clean `False` verdict with a
+`verifier-crash(...)` reason, rather than a `host-error` slot in the
+ledger. Individual verifiers guard against non-numeric coordinates,
+mixed-type rows, and in-place mutation of immutable containers (all
+surfaced by the pre-launch adversarial review).
+
+### Fable trace check pipeline
+
+`analysis/trace_summary.py` compresses each surviving transcript into an
+event stream (assistant text, tool calls, tool results, thinking-block
+placeholders) with head+tail truncation on long content. Median transcript
+22 KB → summary 8 KB; max transcript 40 MB → summary 26 KB. The fable
+trace-check workflow runs one fable call per 5 summaries, returning
+structured output that populates `runs/trace_check.jsonl`.
+
+Aggregates (2026-08-04, 1818 surviving transcripts):
+
+- self-verification: 31.6% two-method-crosscheck, 38.4% single-method-recheck,
+  26.3% no-verify, 3.7% not-enough-signal.
+- behavioral form: 66.8% search-solve, 26.1% multi-round-verifying, 4.1%
+  hackiest, 1.4% one-shot, 1.6% not-enough-signal.
+- answer-in-turn: 1542 submitted; of the ~275 unsubmitted runs only 3 stated
+  the correct answer as a conclusion (12 stated a wrong conclusion, 239 had
+  no answer in the trace, 22 had the answer only inside a search log).
+
+Detailed per-run tags in `runs/trace_check.jsonl` (local).

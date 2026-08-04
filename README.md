@@ -18,12 +18,15 @@ this benchmark applies to the model together with its harness.
 > **Note on the published ranking.** This cross-harness ranking has a **known
 > defect**: the per-run budget and turn caps were not truly aligned across
 > the two harnesses (the Codex per-run cap did not bind in practice, while
-> the Claude side frequently hit its cap and got cut off). A **revision is in
-> progress**, and covers: re-alignment on the "one full agent invocation" unit,
-> explicit disclosure of cap-cut runs, back-fill of the earlier-omitted open
-> puzzles, phase-level trace analysis, and a self-verification-stratified
-> pass@k. The frozen numbers below stay as published; the revised methodology
-> will appear in a separate write-up.
+> the Claude side frequently hit its cap and got cut off). A revision is
+> under way: on 2026-08-04 the nine previously-omitted open-competition
+> puzzles were back-filled under an envelope + certificate-verifier grader,
+> and a fable trace-check pipeline tagged 1818 surviving transcripts across
+> the Schoenfeld six-episode share, self-verification form, and behavioral
+> form dimensions. Details are in the "Open-puzzle back-fill" and "Trace
+> check" sections of [`results/FINAL_REPORT.md`](results/FINAL_REPORT.md).
+> The frozen 6-model tables stay as published; the revised methodology and
+> its write-up build on top of them.
 
 The full run is **134 puzzles × 6 models × 3 independent samples = 2,412
 sessions**. The metric is unbiased **pass@3** (Chen et al. 2021). The standard

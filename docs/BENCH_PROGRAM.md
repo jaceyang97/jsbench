@@ -398,3 +398,85 @@ puzzles. The checks for cp2–cp4 proceed with the batches.
   frequently hit its cap and got cut off) and that a revised write-up is in
   progress. The published numbers are not changed.
   (3) The docs remain in controlled English per the 2026-07-24 rewrite.
+
+- 2026-08-04 (afternoon) — **open-puzzle back-fill + trace-check pipeline
+  launched**; the frozen bc57392 ranking and the 134-puzzle set do not
+  change.
+
+  (1) **Nine open-competition puzzles reinstated** (chain-reaction,
+  minesweeping, hall-of-mirrors, polymath, swing-time, middlylinks,
+  scraggle, almost-magic, altered-states-2). Each was previously in
+  `exclude_recommended` because it has no unique answer. The reinstatement
+  uses a compound grader: a deterministic verifier over an envelope
+  `{"value": ..., "solution": ...}` plus a fable trace-check pass. Nine new
+  certificate verifiers were registered in `grading/verifiers.py`;
+  `grading/grade.py` grew an envelope-aware `load_submitted` branch and a
+  try/except around `run_verifier` so a shape crash becomes a clean False
+  verdict rather than a host-error slot. `harness/prompts.py` gained a
+  `submission_form` parameter on `render_task` so the 134 legacy puzzles
+  render byte-identically while the 9 back-fill puzzles get the envelope
+  wording.
+
+  (2) **Canonical puzzle geometry pinned** for the four geometry-heavy
+  puzzles (hall-of-mirrors, polymath, swing-time, almost-magic). Fable
+  transcribed the geometry and Jane Street's own published solution for
+  each, and cross-checked by running the verifier against JS's solution
+  under that geometry (all four cross-checks passed; the swing-time
+  cross-check drove a verifier rewrite — see below). The canonical
+  geometry lives in `data/graders/<id>.json` under a `canonical_geometry`
+  key; grade.py injects it into the envelope's `solution` at grade time so
+  the verifier code stays untouched.
+
+  (3) **Adversarial verifier review** ran before back-fill launch (Anthropic
+  Opus 4.7, 9-puzzle sweep, each reviewer verified findings by running
+  exploits against the code). It surfaced four high-severity
+  "transcription-trust" cheating vectors — all four are the same class,
+  where the deterministic verifier trusted the agent's inline transcription
+  of puzzle geometry. Item (2) above closes all four. It also surfaced one
+  medium (scraggle's chain condition compared only letters, not the shared
+  endpoint square — fixed) and three low (shape-crash guards on
+  minesweeping / scraggle / altered-states-2 — fixed).
+
+  (4) **swing-time verifier rewrite**. JS's own reference-scoring 9-swing
+  solution rejected under the initial strict-radius rule (swing 1 uses rope
+  wrapping around post c4: `|a1-a4|=3`, `|a4-c4|+|c4-c3|=3`,
+  `|a4-c3|=√5`). The verifier was rewritten to accept optional `wrap`
+  chains per swing under a rope-conservation check
+  (`|cur-post| == sum(segment_lengths)`). JS's solution now verifies True
+  (recomputed cost 0.708204, matches published 0.7082). The arc-obstruction
+  rule (particle may not sweep through a post) stays deferred to the
+  trace-check pass because it needs full physics simulation; the grader's
+  optimization_sense was moved to "none" (pass on legality, log cost for
+  the writeup gallery) to reflect that.
+
+  (5) **Swing-time bundle** was empty (problem statement was in an
+  unfetched PDF at `/static/puzzles/Aug16_Puzzle.pdf`). The PDF has now
+  been fetched, rasterized to `images/puzzle-{1,2}.png`, and `problem.md`
+  rewritten from the PDF text. Bundle setup on the other 8 puzzles is
+  unchanged from the frozen set.
+
+  (6) **Back-fill queue** = 9 puzzles × 6 tiers × k=3 = 162 runs
+  (`plans/openbackfill/cp_open_claude.json` + `cp_open_gpt.json`). The
+  Claude arm ran clean (81/81 terminal, $58.18 spent). The GPT arm ran
+  into an OpenAI credit outage mid-batch; the runner re-queued the 21
+  affected keys idempotently and they finished on retry after the credit
+  was topped up. Combined cost tracks toward roughly $90–100.
+
+  (7) **Fable trace-check pipeline** ran over 1818 surviving transcripts
+  from the frozen bc57392 set. The pass computes, per run, a Schoenfeld
+  six-episode share (Read / Analyze / Explore / Plan / Implement / Verify),
+  a self-verification form tag (two-method-crosscheck /
+  single-method-recheck / no-verify / not-enough-signal), a memorization or
+  behavioral form tag (search-solve / multi-round-verifying / hackiest /
+  one-shot / not-enough-signal), and — for unsubmitted runs — an
+  answer-in-turn tag. A compact per-transcript summary
+  (`analysis/trace_summary.py`) collapses each transcript (median 22 KB,
+  p99 12 MB, max 40 MB) to a 3-40 KB summary before feeding fable, so the
+  fat-tail transcripts stay tractable. Aggregates and per-run tags are in
+  `runs/trace_check.jsonl` and `runs/trace_check_summary.json` (both
+  local).
+
+  (8) Numbers, tables, and the frozen 6-model ranking in
+  `results/FINAL_REPORT.md` did NOT change. The new material is appended
+  as separate "Open-puzzle back-fill" and "Trace check" sections below the
+  frozen tables.

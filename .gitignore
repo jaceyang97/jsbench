@@ -11,6 +11,7 @@ __pycache__/
 # future training corpora; reproducible via pipeline.scrape)
 data/
 runs/
+logs/
 
 # local-only backup of pre-publication git history
 .git_local_backup/

@@ -46,13 +46,15 @@ from harness.prompts import (  # noqa: E402
 CODEX_VERSION = CONFIG["harness"].get("codex_version", "unknown")
 
 
-def codex_prompt(problem_md: str, answer_format: str, date: str, has_images: bool) -> str:
+def codex_prompt(problem_md: str, answer_format: str, date: str, has_images: bool,
+                 submission_form: str = "answer_string") -> str:
     """Identical task content to the Claude side. On the Claude harness the
     SYSTEM_APPEND rides in the system prompt and render_task is the first user
     message; Codex keeps its own native system prompt, so we hand it both as the
     initial instruction. The two models thus read the same task, differing only
     in the harness scaffold — exactly the comparison we want."""
-    return SYSTEM_APPEND + "\n\n" + render_task(problem_md, answer_format, date, has_images)
+    return SYSTEM_APPEND + "\n\n" + render_task(problem_md, answer_format, date,
+                                                has_images, submission_form=submission_form)
 
 
 def _login(codex_home: Path) -> bool:
@@ -149,7 +151,8 @@ def run_codex(puzzle_id: str, tier: str, sample_idx: int = 1,
     img_dir = workdir / "images"
     images = sorted(str(p) for p in img_dir.iterdir()) if img_dir.exists() else []
 
-    prompt = codex_prompt(problem_md, meta["answer_format"], meta["date"], bool(images))
+    prompt = codex_prompt(problem_md, meta["answer_format"], meta["date"], bool(images),
+                          submission_form=meta.get("submission_form", "answer_string"))
     transcript_path = run_dir / "transcript.jsonl"
     (run_dir / "initial_message.json").write_text(json.dumps(
         {"prompt": prompt, "images": [Path(i).name for i in images]},

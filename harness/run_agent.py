@@ -127,15 +127,31 @@ def snapshot_answer(workdir: Path) -> str | None:
 
 def read_submitted_answer(workdir: Path) -> str | None:
     """The agent's OWN submission (output/answer.json) — never the grader.
-    Distinct from a null 'answer' key (malformed) vs a missing file."""
+    Distinct from a null 'answer' key (malformed) vs a missing file.
+
+    Two shapes are accepted:
+      * legacy {"answer": "<string>"} — returns the string.
+      * envelope {"value": ..., "solution": ...} — returns a compact JSON
+        stringification so downstream truthy tests (e.g. the exit_reason
+        "submitted vs attempts_exhausted" branch) treat it as a submission.
+        The host grader always reads envelope form directly from the file;
+        this string is only for exit_reason bookkeeping and the ledger
+        placeholder before host grading overwrites it.
+    """
     p = workdir / "output" / "answer.json"
     if not p.exists():
         return None
     try:
-        val = json.loads(p.read_text(encoding="utf-8")).get("answer")
-        return None if val is None else str(val)
+        obj = json.loads(p.read_text(encoding="utf-8"))
     except Exception:
         return None
+    if not isinstance(obj, dict):
+        return None
+    if "answer" in obj and obj["answer"] is not None:
+        return str(obj["answer"])
+    if "solution" in obj and obj["solution"] is not None:
+        return json.dumps(obj, ensure_ascii=False, separators=(",", ":"))[:2000]
+    return None
 
 
 def image_blocks(workdir: Path) -> list[dict]:
@@ -181,7 +197,8 @@ async def run_agent(puzzle_id: str, tier: str, sample_idx: int = 1,
     problem_md = (workdir / "problem.md").read_text(encoding="utf-8")
     imgs = image_blocks(workdir)
 
-    task_text = render_task(problem_md, meta["answer_format"], meta["date"], bool(imgs))
+    task_text = render_task(problem_md, meta["answer_format"], meta["date"], bool(imgs),
+                            submission_form=meta.get("submission_form", "answer_string"))
     content: list[dict] = imgs + [{"type": "text", "text": task_text}]
 
     import os
