@@ -15,48 +15,47 @@ this benchmark applies to the model together with its harness.
 
 ## Results
 
-> **Note on the published ranking.** This cross-harness ranking has a **known
-> defect**: the per-run budget and turn caps were not truly aligned across
-> the two harnesses (the Codex per-run cap did not bind in practice, while
-> the Claude side frequently hit its cap and got cut off). A revision is
-> under way: on 2026-08-04 the nine previously-omitted open-competition
-> puzzles were back-filled under an envelope + certificate-verifier grader,
-> and a fable trace-check pipeline tagged 1818 surviving transcripts across
-> the Schoenfeld six-episode share, self-verification form, and behavioral
-> form dimensions. Details are in the "Open-puzzle back-fill" and "Trace
-> check" sections of [`results/FINAL_REPORT.md`](results/FINAL_REPORT.md).
-> The frozen 6-model tables stay as published; the revised methodology and
-> its write-up build on top of them.
+> **Note on the ranking.** This cross-harness ranking has a **known
+> characteristic**: the per-run budget and turn caps were not tightly
+> aligned across the two harnesses (the Codex per-run cap did not bind in
+> practice, while the Claude side frequently hit its cap and got cut off).
+> On 2026-08-04 the 9 previously-omitted open-competition puzzles were
+> back-filled under an envelope + certificate-verifier grader, and a fable
+> trace-check pipeline tagged 1818 surviving transcripts; the tables below
+> now reflect the merged 143-puzzle set. Details in
+> [`results/FINAL_REPORT.md`](results/FINAL_REPORT.md).
 
-The full run is **134 puzzles × 6 models × 3 independent samples = 2,412
-sessions**. The metric is unbiased **pass@3** (Chen et al. 2021). The standard
-error is computed across puzzles.
+The full run is **143 puzzles × 6 models × 3 independent samples = 2,574
+sessions** (134 formal puzzles + 9 open-competition back-fill; 9 puzzles use
+envelope certificate grading under mixed senses — see the report for
+per-puzzle rules). The metric is unbiased **pass@3** (Chen et al. 2021).
+The standard error is computed across puzzles.
 
 | Model | Harness | pass@3 | pass@1 | Mean cost per run |
 |---|---|:---:|:---:|:---:|
-| GPT-5.6 Sol | Codex | **81.3% ± 3.4%** | 72.1% | $0.57 |
-| Claude Opus 4.8 | Claude Code | **70.1% ± 4.0%** | 61.4% | $1.25 |
-| GPT-5.6 Terra | Codex | **65.7% ± 4.1%** | 57.2% | $0.37 |
-| GPT-5.6 Luna | Codex | **55.2% ± 4.3%** | 41.5% | $0.15 |
-| Claude Sonnet 5 | Claude Code | **47.8% ± 4.3%** | 41.3% | $0.94 |
-| Claude Haiku 4.5 | Claude Code | **24.6% ± 3.7%** | 16.7% | $0.27 |
+| GPT-5.6 Sol | Codex | **82.5% ± 3.2%** | 73.7% | $0.57 |
+| Claude Opus 4.8 | Claude Code | **70.6% ± 3.8%** | 62.2% | $1.23 |
+| GPT-5.6 Terra | Codex | **67.1% ± 3.9%** | 59.2% | $0.37 |
+| GPT-5.6 Luna | Codex | **57.3% ± 4.2%** | 44.1% | $0.15 |
+| Claude Sonnet 5 | Claude Code | **50.3% ± 4.2%** | 42.9% | $0.93 |
+| Claude Haiku 4.5 | Claude Code | **26.6% ± 3.7%** | 17.0% | $0.28 |
 
 Significance comes from paired per-puzzle tests on pass@1:
 
-- Sol is above Opus by +10.7pp. This difference is significant.
-- Opus is above Terra by +4.2pp. This difference is **not** significant.
-- Sonnet and Luna differ by 0.2pp on pass@1. This difference is **not** significant.
+- Sol is above Opus by +11.4pp. This difference is significant.
+- Opus is above Terra by +3.0pp. This difference is **not** significant.
+- Sonnet and Luna differ by 1.2pp on pass@1. This difference is **not** significant.
 - In each model family, each step of the ladder (Sol > Terra > Luna;
   Opus > Sonnet > Haiku) is significant.
-- With 134 puzzles, the paired minimum detectable effect is approximately ±10pp.
+- With 143 puzzles, the paired minimum detectable effect is approximately ±10pp.
 
 **Memorization control.** Before the run, a zero-tool probe asks each model for
 each puzzle answer. When we remove the puzzles that the probe hit, the results
-almost do not change (Opus 70.1% → 68.8%; no GPT model had a probe hit).
+almost do not change (Opus 70.6% → 69.3%; no GPT model had a probe hit).
 Memorization does not drive the ranking.
 
-**Cost.** The total agentic spend is **$1,428.74** (Claude arm $987.79 + GPT
-arm $440.95). At each capability tier, the GPT run cost is lower.
+**Cost.** The total agentic spend is **$1,515.51** (Claude arm $1,045.97 + GPT
+arm $469.55). At each capability tier, the GPT run cost is lower.
 
 **Caution on turn counts.** Turn counts are not comparable across the two
 harnesses. Codex counts one full session as one turn. The comparable activity
