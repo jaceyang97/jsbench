@@ -64,7 +64,10 @@ _* 9 of 143 puzzles are the open-competition back-fill (2026-08-04) graded by en
 | gpt-5.6-sol | 429 | $243.85 | $0.57 | 1 |
 | gpt-5.6-terra | 429 | $159.44 | $0.37 | 1 |
 
-**Total agentic spend: $1515.51**
+**Total agentic spend: $1,534.80** _(table above reflects the 2026-08-05
+merged state at $1,515.51; the delta is the 2026-08-15 defective-bundle
+re-run — see the addendum at the bottom of this report. No pass@k number
+changed.)_
 
 _Power note: with 143 puzzles, the paired-test MDE is roughly ±10pp — only differences larger than this are reliably detectable at this budget._
 
@@ -218,3 +221,31 @@ puzzle-title, tier, and correctness for later slicing). 1192 of the 1818
 runs came back with a non-empty insight note; that number is closer to a
 "gallery candidate list" than a curated selection — the write-up will still
 filter down to a small hand-picked set.
+
+---
+
+## Addendum: bundle-validity audit and defective-bundle re-run (2026-08-15)
+
+A full-set audit found that one puzzle, `2025-06-some-ones-somewhere`, had
+been served **content-free** in the original runs: its statement is a PDF
+the scraper never followed, so agents received a one-line stub and no
+images. All 18 original runs scored 0 — a measurement of the harness
+defect, not of the models.
+
+The bundle was rebuilt from the puzzle PDF (nine photographs, reading
+order, plus a page overview) and the puzzle was re-run under the identical
+setup — same containers, images, prompts, caps, and grading, verified per
+tier by config SHA fingerprints against the July records (the only changed
+hash is the task-rules text, whose images clause now truthfully reports
+attached images).
+
+**Outcome: 18/18 valid runs, 0 correct. Every pass@k table in this report
+is numerically unchanged; the puzzle's zero is now earned rather than
+artifactual.** All three Claude tiers exhausted their attempt without
+submitting; all three GPT tiers submitted wrong answers; one sol run spent
+$4.26 against its nominal $3.00 cap (a live reproduction of the known
+caps-not-binding characteristic). Re-run cost $23.46; ledger total is now
+$1,534.80. The remaining 142 bundles were audited solvable-as-served
+(one, `2025-11-shut-the-box`, is missing a linked worked-example image but
+retains complete rules and grid; it was judged solvable and left as-is).
+Details in the `docs/BENCH_PROGRAM.md` change log, 2026-08-15 entry.

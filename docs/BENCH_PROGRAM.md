@@ -480,3 +480,54 @@ puzzles. The checks for cp2–cp4 proceed with the batches.
   `results/FINAL_REPORT.md` did NOT change. The new material is appended
   as separate "Open-puzzle back-fill" and "Trace check" sections below the
   frozen tables.
+
+- 2026-08-15 — full-set bundle-validity audit; one defective bundle found,
+  rebuilt, and re-run (operator-authorized). On top of the frozen record:
+
+  (1) **Trigger.** During write-up work a puzzle-type tagging pass noticed
+  that `2025-06-some-ones-somewhere` was served content-free: its
+  `problem.md` was a stub whose "can be seen here" link had been stripped
+  by the anti-leak pipeline, and the bundle had no images. Root cause: the
+  puzzle's entire statement is a PDF (`june-2025-puzzle.pdf`), and the
+  scraper followed `<img>` tags but never PDF links. All 18 July runs on
+  it scored 0 with several agents explicitly stating the content was
+  missing — the zero measured the harness, not the models.
+
+  (2) **Full-set audit.** All 143 bundles were audited ("solvable as
+  served"): statement text + every bundled image reviewed against the
+  known-defect calibration case. Result 141 ok / 1 suspect / 1 defect.
+  The suspect (`2025-11-shut-the-box`) is missing a linked worked-example
+  image but its rules text and main grid image are complete; judged
+  solvable; disclosed here, not re-run (operator decision). Deterministic
+  cross-checks: zero has_image/image_delivered mismatches across all runs.
+
+  (3) **Rebuild.** The defective bundle was rebuilt from the puzzle PDF:
+  nine photographs extracted at native resolution in reading order
+  (`photo_1..photo_9.jpeg`) plus a full-page `overview_grid.png`;
+  `problem.md`/`metadata.json` updated accordingly. The originally-served
+  stub is preserved in `_defective_original_20250815/` inside the bundle.
+
+  (4) **Re-run (same setup).** `orchestrate/runner.py` gained a `--redo`
+  flag (queue plan items even when a terminal record exists; new records
+  supersede old by last-wins — the ledger's existing recovery semantics).
+  6 tiers × k=3 = 18 fresh containerized runs through the unchanged
+  compose services, images, prompts, caps, and host-side grading.
+  Per-tier SHA fingerprints (system prompt, retry-feedback, harness
+  version, grader snapshot) match the July records exactly; the only
+  changed hash is task_rules, whose images clause now truthfully reports
+  attached images. One transient Codex infra error (sol s3, 0 turns) was
+  retried through the standard idempotent path.
+
+  (5) **Outcome: 18/18 valid, 0 correct — every published pass@k number
+  is unchanged.** The puzzle's zero is now earned rather than
+  artifactual. Texture: all three Claude tiers exhausted their attempt
+  without submitting; all three GPT tiers submitted wrong answers; sol s3
+  spent $4.26 against its nominal $3.00 cap — a live reproduction of the
+  known caps-not-binding characteristic. Re-run cost $23.46 (Claude arm
+  $14.25, GPT arm $9.22); the ledger last-wins total is now **$1,534.80**
+  (the superseded content-free runs' $4.17 no longer counts).
+
+  (6) **Known gap.** The 18 new transcripts are not part of the
+  1818-transcript fable trace-check corpus (which remains frozen as
+  tagged on 2026-08-04); any behavioral analysis quoting that corpus
+  excludes them.

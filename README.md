@@ -22,7 +22,11 @@ this benchmark applies to the model together with its harness.
 > On 2026-08-04 the 9 previously-omitted open-competition puzzles were
 > back-filled under an envelope + certificate-verifier grader, and a fable
 > trace-check pipeline tagged 1818 surviving transcripts; the tables below
-> now reflect the merged 143-puzzle set. Details in
+> now reflect the merged 143-puzzle set. On 2026-08-15 a full-set audit
+> found one puzzle had been served content-free (its statement was a PDF
+> the scraper never followed); its bundle was rebuilt and the puzzle
+> re-run under the identical setup — all 18 re-runs failed, so **no
+> pass@k number changed**. Details in
 > [`results/FINAL_REPORT.md`](results/FINAL_REPORT.md).
 
 The full run is **143 puzzles × 6 models × 3 independent samples = 2,574
@@ -54,8 +58,10 @@ each puzzle answer. When we remove the puzzles that the probe hit, the results
 almost do not change (Opus 70.6% → 69.3%; no GPT model had a probe hit).
 Memorization does not drive the ranking.
 
-**Cost.** The total agentic spend is **$1,515.51** (Claude arm $1,045.97 + GPT
-arm $469.55). At each capability tier, the GPT run cost is lower.
+**Cost.** The total agentic spend is **$1,534.80** (Claude arm $1,057.00 + GPT
+arm $477.81, including the 2026-08-15 defective-bundle re-run; the superseded
+content-free runs no longer count). At each capability tier, the GPT run cost
+is lower.
 
 **Caution on turn counts.** Turn counts are not comparable across the two
 harnesses. Codex counts one full session as one turn. The comparable activity

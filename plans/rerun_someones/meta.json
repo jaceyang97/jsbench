@@ -1,0 +1,13 @@
+{
+ "purpose": "2026-08-15 defective-bundle re-run: 2025-06-some-ones-somewhere was originally served as a content-free stub (statement was a PDF the scraper never followed). Bundle rebuilt from june-2025-puzzle.pdf (9 photos, reading order, + overview grid). Same models, same setup, 6 tiers x k=3 = 18 runs; new records supersede the content-free ones by last-wins.",
+ "tiers": [
+  "haiku",
+  "sonnet",
+  "opus",
+  "gpt-luna",
+  "gpt-terra",
+  "gpt-sol"
+ ],
+ "k": 3,
+ "runs": 18
+}

@@ -225,6 +225,10 @@ def main() -> None:
     ap.add_argument("--local", action="store_true",
                     help="run on host instead of per-run disposable containers "
                          "(smoke tests only — NOT valid for scored runs)")
+    ap.add_argument("--redo", action="store_true",
+                    help="queue every plan item even if a terminal record exists "
+                         "(defective-puzzle re-runs; new records supersede old "
+                         "by last-wins on the (puzzle, model, sample) key)")
     args = ap.parse_args()
 
     if args.phase0:
@@ -235,7 +239,7 @@ def main() -> None:
     else:
         ap.error("need --plan or --phase0")
 
-    queue = build_queue(plan, load_done())
+    queue = build_queue(plan, {} if args.redo else load_done())
     est = sum(MODELS[i["tier"]]["max_budget_usd"] for i in queue)
     logger.info(f"queue: {len(queue)} runs, worst-case cost <= ${est:.0f}")
     if args.dry_run:

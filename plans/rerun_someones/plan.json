@@ -1,0 +1,32 @@
+[
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "haiku",
+  "k": 3
+ },
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "sonnet",
+  "k": 3
+ },
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "opus",
+  "k": 3
+ },
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "gpt-luna",
+  "k": 3
+ },
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "gpt-terra",
+  "k": 3
+ },
+ {
+  "puzzle_id": "2025-06-some-ones-somewhere",
+  "tier": "gpt-sol",
+  "k": 3
+ }
+]
